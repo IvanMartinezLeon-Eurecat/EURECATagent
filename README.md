@@ -132,6 +132,7 @@ Responsabilidades:
 │       ├── chains/                   # workflows genéricos reutilizables
 │       ├── skills/                   # skills especializadas EURECAT
 │       └── themes/                   # tema visual del agente
+├── install.sh                        # entry point cross-platform (curl|sh)
 ├── install/
 │   ├── install.sh                    # instalador Linux/macOS
 │   ├── install.ps1                   # instalador Windows PowerShell
@@ -140,6 +141,8 @@ Responsabilidades:
 │   ├── uninstall.*                   # desinstalación
 │   ├── templates/                    # wrappers y plantillas auxiliares
 │   └── *.md                          # guías operativas
+├── scripts/
+│   └── build-release.sh              # genera release tarball para curl|sh
 └── poc/
     └── code-intelligence-demo/       # ejemplo guiado para Code Intelligence
 ```
@@ -193,14 +196,37 @@ Requisitos mínimos:
 
 ### 2. Ejecuta el instalador
 
-#### Linux / macOS
+#### Opción rápida (curl | sh) — sin clonar el repo
+
+**macOS / Linux / Windows (Git Bash / WSL):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.sh | sh
+```
+
+**Windows PowerShell:**
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+iwr -useb https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.ps1 | iex
+```
+
+**Windows CMD:**
+
+```bat
+curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.bat -o install.bat && install.bat
+```
+
+#### Opción desde el repositorio clonado
+
+**Linux / macOS:**
 
 ```bash
 cd install
 bash install.sh
 ```
 
-#### Windows PowerShell
+**Windows PowerShell:**
 
 ```powershell
 cd install
@@ -208,7 +234,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 .\install.ps1
 ```
 
-#### Windows CMD
+**Windows CMD:**
 
 ```bat
 cd install

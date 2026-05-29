@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build release tarball
+        run: bash scripts/build-release.sh "${GITHUB_REF_NAME}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            dist/eurecatagent-"${GITHUB_REF_NAME}".tar.gz \
+            dist/eurecatagent.tar.gz \
+            install/install.sh \
+            install/install.ps1 \
+            install/install.bat \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
