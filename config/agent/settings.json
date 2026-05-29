@@ -1,0 +1,27 @@
+{
+  "theme": "eurecat-theme",
+  "quietStartup": true,
+  "hideThinkingBlock": true,
+  "subagents": {
+    "agentOverrides": {
+      "context-builder": {
+        "thinking": "high"
+      },
+      "planner": {
+        "thinking": "high",
+        "defaultContext": "fork"
+      },
+      "reviewer": {
+        "thinking": "high"
+      },
+      "worker": {
+        "thinking": "high",
+        "defaultContext": "fork"
+      },
+      "oracle": {
+        "thinking": "high",
+        "defaultContext": "fork"
+      }
+    }
+  }
+}

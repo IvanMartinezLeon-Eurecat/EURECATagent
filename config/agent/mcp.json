@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "toolPrefix": "server",
+    "idleTimeout": 10
+  },
+  "mcpServers": {
+    "context-mode": {
+      "command": "npx",
+      "args": ["-y", "context-mode"],
+      "lifecycle": "lazy"
+    }
+  }
+}
