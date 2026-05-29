@@ -36,7 +36,7 @@ echo -e "${BLUE}== Verificaciones del Sistema ==${NC}"
 echo ""
 check_command "node" "Node.js"
 check_command "npm" "npm"
-check_command "pi" "Pi"
+check_command "pi" "EURECATagent"
 
 echo ""
 echo -e "${BLUE}== Variables de Entorno (Opcional) ==${NC}"
@@ -45,7 +45,7 @@ if [ -n "${ANTHROPIC_API_KEY}" ]; then
     echo -e "${GREEN}✓ ANTHROPIC_API_KEY${NC}: Configurada"
     ((CHECKS_PASSED++))
 else
-    echo -e "${YELLOW}⚠ ANTHROPIC_API_KEY${NC}: No configurada (puedes usar /login en Pi)"
+    echo -e "${YELLOW}⚠ ANTHROPIC_API_KEY${NC}: No configurada (puedes usar /login en EURECATagent)"
 fi
 
 echo ""

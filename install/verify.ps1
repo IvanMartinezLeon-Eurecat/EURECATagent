@@ -33,7 +33,7 @@ Write-Host "== Verificaciones del Sistema ==" -ForegroundColor $Blue
 Write-Host ""
 Check-Command "node" "Node.js"
 Check-Command "npm" "npm"
-Check-Command "pi" "Pi"
+Check-Command "pi" "EURECATagent"
 
 Write-Host ""
 Write-Host "== Variables de Entorno (Opcional) ==" -ForegroundColor $Blue
@@ -42,7 +42,7 @@ if ($env:ANTHROPIC_API_KEY) {
     Write-Host "✓ ANTHROPIC_API_KEY : Configurada" -ForegroundColor $Green
     $global:checksPass++
 } else {
-    Write-Host "⚠ ANTHROPIC_API_KEY : No configurada (puedes usar /login en Pi)" -ForegroundColor $Yellow
+    Write-Host "⚠ ANTHROPIC_API_KEY : No configurada (puedes usar /login en EURECATagent)" -ForegroundColor $Yellow
 }
 
 Write-Host ""

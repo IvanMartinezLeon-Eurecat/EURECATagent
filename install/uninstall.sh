@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # EURECAT agent Uninstaller for Linux/macOS
-# This script uninstalls Pi coding agent
+# Uninstall script for EURECATagent
 
 set -e
 
@@ -24,7 +24,7 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-echo -e "${YELLOW}This will uninstall Pi from your system.${NC}"
+echo -e "${YELLOW}This will uninstall EURECATagent from your system.${NC}"
 read -p "Are you sure? (y/N) " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -35,7 +35,7 @@ fi
 AGENT_CONFIG_DIR="${HOME}/.pi/agent"
 
 echo ""
-echo -e "${YELLOW}Removing Pi packages managed by EURECAT...${NC}"
+echo -e "${YELLOW}Removing EURECAT packages...${NC}"
 
 PI_BIN=""
 if command -v pi &> /dev/null; then
@@ -53,9 +53,9 @@ if [ -n "${PI_BIN}" ]; then
     "${PI_BIN}" remove npm:pi-subagents || true
 fi
 
-echo -e "${YELLOW}Uninstalling Pi coding agent...${NC}"
+echo -e "${YELLOW}Uninstalling EURECATagent...${NC}"
 
-# Uninstall Pi using npm
+# Uninstall the underlying agent using npm
 npm uninstall -g @earendil-works/pi-coding-agent
 
 echo -e "${YELLOW}Removing EURECAT configuration from ${AGENT_CONFIG_DIR}...${NC}"
@@ -101,14 +101,14 @@ rmdir "${HOME}/.pi" 2>/dev/null || true
 
 echo ""
 echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  Pi uninstalled successfully!          ║${NC}"
+echo -e "${GREEN}║  EURECATagent uninstalled successfully!║${NC}"
 echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "${GREEN}✓ EURECAT configuration removed from ${AGENT_CONFIG_DIR}${NC}"
 echo ""
 
 # Check alternative package managers
-echo -e "${YELLOW}If you installed Pi with a different package manager:${NC}"
+echo -e "${YELLOW}If you installed EURECATagent with a different package manager:${NC}"
 echo "  - pnpm: pnpm remove -g @earendil-works/pi-coding-agent"
 echo "  - Yarn: yarn global remove @earendil-works/pi-coding-agent"
 echo "  - Bun:  bun uninstall -g @earendil-works/pi-coding-agent"

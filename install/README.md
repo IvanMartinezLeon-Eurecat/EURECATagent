@@ -1,6 +1,6 @@
 # Instalación de EURECATagent
 
-Guía principal para instalar el entorno **Pi + configuración EURECAT** desde este repositorio.
+Guía principal para instalar **EURECATagent** desde este repositorio.
 
 Este directorio contiene los scripts y documentos necesarios para dejar preparado un entorno homogéneo de trabajo con:
 
@@ -23,7 +23,7 @@ Este directorio contiene los scripts y documentos necesarios para dejar preparad
 - [Requisitos previos](#requisitos-previos)
 - [Instalación rápida](#instalación-rápida)
 - [Instalación manual mínima](#instalación-manual-mínima)
-- [Primer arranque de Pi](#primer-arranque-de-pi)
+- [Primer arranque](#primer-arranque)
 - [Flujo recomendado tras instalar](#flujo-recomendado-tras-instalar)
 - [Resumen del routing híbrido](#resumen-del-routing-híbrido)
 - [Subagentes y chains genéricas incluidas](#subagentes-y-chains-genéricas-incluidas)
@@ -47,7 +47,7 @@ Los scripts de este directorio realizan estas acciones:
 5. Dejan disponible la extensión `ai-router`.
 6. Preparan un launcher `pi` orientado a contexto por proyecto.
 
-El objetivo no es solo “tener Pi instalado”, sino disponer de una **base de trabajo coherente para EURECAT**.
+El objetivo es disponer de una **base de trabajo coherente para EURECAT** en cualquier proyecto.
 
 ---
 
@@ -172,7 +172,7 @@ pi install npm:@catdaemon/pi-code-intelligence
 
 ---
 
-## Primer arranque de Pi
+## Primer arranque
 
 Una vez terminada la instalación:
 
@@ -181,7 +181,7 @@ cd /ruta/a/tu/proyecto
 pi
 ```
 
-Dentro de Pi:
+Una vez arrancado:
 
 ```text
 /login
@@ -277,7 +277,7 @@ La instalación deja preparado un flujo híbrido con tres capas:
 
 - `code_intelligence_*` para descubrimiento estructural e impacto
 - `context-mode` para logs, salidas grandes y procesamiento pesado
-- tools nativas de Pi (`read`, `edit`, `write`, `bash`) para implementación puntual
+- tools nativas (`read`, `edit`, `write`, `bash`) para implementación puntual
 
 ### Cuándo usar cada capa
 
@@ -329,7 +329,7 @@ bash
 
 ### Intención del diseño
 
-La idea no es sustituir las tools nativas de Pi, sino ordenar el flujo:
+La idea no es sustituir las tools nativas, sino ordenar el flujo:
 
 - `code-intelligence` decide dónde mirar primero
 - `context-mode` evita inundar la conversación con salida pesada
@@ -553,7 +553,7 @@ Las verificaciones comprueban, entre otros puntos:
 - La configuración EURECAT añade reglas operativas al agente, incluyendo comunicación en castellano y restricciones de escritura fuera del directorio activo sin permiso explícito.
 - `@catdaemon/pi-code-intelligence` se usa para descubrimiento estructural, impacto, review y learnings por repositorio.
 - `context-mode` sigue siendo la vía recomendada para logs grandes, outputs pesados y procesamiento de contexto extenso.
-- La extensión `ai-router` no sustituye a las tools nativas de Pi: ayuda a decidir **qué mirar primero** y **con qué herramienta conviene empezar**.
+- La extensión `ai-router` no sustituye a las tools nativas: ayuda a decidir **qué mirar primero** y **con qué herramienta conviene empezar**.
 
 ---
 

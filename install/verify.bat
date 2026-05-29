@@ -49,7 +49,7 @@ if defined ANTHROPIC_API_KEY (
     echo [OK] ANTHROPIC_API_KEY: Configurada
     set /a checks_pass+=1
 ) else (
-    echo [WARN] ANTHROPIC_API_KEY: No configurada ^(puedes usar /login en Pi^)
+    echo [WARN] ANTHROPIC_API_KEY: No configurada ^(puedes usar /login en EURECATagent^)
 )
 
 echo.

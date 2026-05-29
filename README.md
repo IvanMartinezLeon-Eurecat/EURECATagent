@@ -9,7 +9,7 @@ Su función principal es dejar preparado un agente de desarrollo con una configu
 - automatización y delegación con **pi-subagents**
 - extensibilidad mediante **extensions**, **skills** y **themes** propios
 
-> Este repo no contiene una aplicación de negocio. Contiene la base para instalar y operar un entorno de Pi adaptado a la forma de trabajo de EURECAT.
+> Este repo no contiene una aplicación de negocio. Contiene la base para instalar y operar EURECATagent.
 
 ---
 
@@ -34,11 +34,11 @@ Su función principal es dejar preparado un agente de desarrollo con una configu
 
 ## Objetivo
 
-Estandarizar cómo se instala y usa Pi en entornos EURECAT.
+Estandarizar cómo se instala y usa EURECATagent en cualquier proyecto.
 
 Este repositorio evita que cada desarrollador tenga que configurar manualmente:
 
-- paquetes adicionales de Pi
+- paquetes adicionales
 - MCPs necesarios
 - extensiones de routing
 - subagentes y chains genéricas reutilizables
@@ -57,7 +57,7 @@ Los scripts de instalación dejan preparado lo siguiente:
 ### Binario base
 - `@earendil-works/pi-coding-agent`
 
-### Paquetes de Pi
+### Paquetes incluidos
 - `pi-subagents`
 - `pi-mcp-adapter`
 - `@catdaemon/pi-code-intelligence`
@@ -89,7 +89,7 @@ El repositorio está organizado en tres capas:
 Contiene scripts multiplataforma y documentación operativa.
 
 Responsabilidades:
-- instalar Pi y paquetes asociados
+- instalar EURECATagent y paquetes asociados
 - copiar configuración al home del usuario
 - dejar disponible el wrapper `pi`
 - validar instalación y entorno
@@ -264,7 +264,7 @@ cd install
 verify.bat
 ```
 
-### 4. Abre Pi en un proyecto
+### 4. Abre EURECATagent en un proyecto
 
 ```bash
 cd /ruta/a/tu/proyecto
@@ -453,7 +453,7 @@ Todos los scripts están pensados para uso directo, sin depender de tooling adic
 
 ## Verificación y diagnóstico
 
-Además de los scripts `verify.*`, el stack recomienda estas comprobaciones dentro de Pi:
+Además de los scripts `verify.*`, el stack recomienda estas comprobaciones:
 
 ```text
 /router-status
@@ -518,7 +518,7 @@ Si acabas de llegar al proyecto, el recorrido mínimo recomendado es:
 1. lee este `README.md`
 2. ejecuta el instalador de tu plataforma en `install/`
 3. ejecuta el verificador correspondiente
-4. abre Pi dentro de un proyecto real
+4. abre EURECATagent dentro de un proyecto real
 5. lanza `/router-status` y activa Code Intelligence
 6. revisa `install/README.md` para ver el uso de subagentes y chains genéricas
 7. prueba al menos uno de estos flujos: `generic-discovery` o `generic-implement-safe`

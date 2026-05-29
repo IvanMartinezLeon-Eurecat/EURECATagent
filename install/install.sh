@@ -79,7 +79,7 @@ resolve_real_pi_bin() {
     return 1
 }
 
-echo -e "${YELLOW}Instalando Pi coding agent...${NC}"
+echo -e "${YELLOW}Instalando EURECATagent...${NC}"
 npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 
 echo -e "${YELLOW}Copiando la configuración de EURECATagent a ${AGENT_CONFIG_DIR}...${NC}"
@@ -92,7 +92,7 @@ mkdir -p "${AGENT_CONFIG_DIR}"
 cp -R "${CONFIG_SOURCE_DIR}/." "${AGENT_CONFIG_DIR}/"
 echo -e "${GREEN}✓ Configuración copiada en ${AGENT_CONFIG_DIR}${NC}"
 
-echo -e "${YELLOW}Instalando y activando paquetes de Pi...${NC}"
+echo -e "${YELLOW}Instalando y activando paquetes...${NC}"
 PI_BIN="$(resolve_real_pi_bin || true)"
 
 if [ -z "${PI_BIN}" ]; then
@@ -122,7 +122,7 @@ export PATH="${AGENT_BIN_DIR}:$PATH"
 echo -e "${GREEN}✓ pi-subagents instalado y activo${NC}"
 echo -e "${GREEN}✓ pi-mcp-adapter instalado y activo${NC}"
 echo -e "${GREEN}✓ @catdaemon/pi-code-intelligence instalado y activo${NC}"
-echo -e "${GREEN}✓ Launcher de Pi orientado a proyecto instalado en ${WRAPPER_PATH}${NC}"
+echo -e "${GREEN}✓ EURECATagent instalado en ${WRAPPER_PATH}${NC}"
 
 echo ""
 echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
@@ -131,9 +131,9 @@ echo -e "${GREEN}╚════════════════════
 echo ""
 
 if command -v pi &> /dev/null; then
-    echo -e "${GREEN}✓ Pi ya está disponible en tu PATH${NC}"
+    echo -e "${GREEN}✓ EURECATagent ya está disponible en tu PATH${NC}"
 else
-    echo -e "${YELLOW}⚠ El comando Pi no está disponible todavía en tu PATH.${NC}"
+    echo -e "${YELLOW}⚠ El comando EURECATagent no está disponible todavía en tu PATH.${NC}"
     echo -e "${YELLOW}Prueba a reiniciar tu terminal o ejecutar: source ~/.bashrc${NC}"
 fi
 
@@ -141,8 +141,8 @@ echo ""
 echo -e "${BLUE}Próximos pasos:${NC}"
 echo "1. Validación opcional: bash verify.sh"
 echo "2. Ve a tu directorio de proyecto: cd /path/to/your/project"
-echo "3. Inicia Pi: pi"
-echo "4. Pi almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
+echo "3. Inicia EURECATagent: pi"
+echo "4. EURECATagent almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
 echo "5. Autentícate con: /login (para proveedores con suscripción)"
 echo "6. O configura tu API key: export ANTHROPIC_API_KEY=your-key"
 echo "7. Comprueba el router: /router-status"

@@ -100,7 +100,7 @@ function Ensure-AgentBinOnUserPath {
     [Environment]::SetEnvironmentVariable("Path", ($newUserPath -join ';'), "User")
 }
 
-Write-Info "Instalando Pi coding agent..."
+Write-Info "Instalando EURECATagent..."
 Write-Host ""
 npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 if ($LASTEXITCODE -ne 0) {
@@ -118,7 +118,7 @@ New-Item -ItemType Directory -Path $agentConfigDir -Force | Out-Null
 Copy-Item -Path (Join-Path $configSourceDir "*") -Destination $agentConfigDir -Recurse -Force
 Write-Success "Configuración copiada en $agentConfigDir"
 
-Write-Info "Instalando y activando paquetes de Pi..."
+Write-Info "Instalando y activando paquetes..."
 $piExecutable = Resolve-RealPiExecutable -WrapperPath $wrapperPath
 
 if (-not $piExecutable) {
@@ -149,16 +149,16 @@ $env:Path = "$agentBinDir;$env:Path"
 Write-Success "pi-subagents instalado y activo"
 Write-Success "pi-mcp-adapter instalado y activo"
 Write-Success "@catdaemon/pi-code-intelligence instalado y activo"
-Write-Success "Launcher de Pi orientado a proyecto instalado en $wrapperPath"
+Write-Success "EURECATagent instalado en $wrapperPath"
 
 Write-Host ""
 Write-Header "EURECATagent instalado correctamente"
 Write-Host ""
 
 if (Get-Command pi -ErrorAction SilentlyContinue) {
-    Write-Success "Pi ya está disponible en tu PATH"
+    Write-Success "EURECATagent ya está disponible en tu PATH"
 } else {
-    Write-Warning-Custom "El comando Pi no está disponible todavía en tu PATH."
+    Write-Warning-Custom "El comando EURECATagent no está disponible todavía en tu PATH."
     Write-Info "Cierra y vuelve a abrir PowerShell o Command Prompt para refrescar tu PATH."
 }
 
@@ -166,8 +166,8 @@ Write-Host ""
 Write-Info "Próximos pasos:"
 Write-Host "1. Validación opcional: .\verify.ps1"
 Write-Host "2. Ve a tu directorio de proyecto: cd C:\path\to\your\project"
-Write-Host "3. Inicia Pi: pi"
-Write-Host "4. Pi almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
+Write-Host "3. Inicia EURECATagent: pi"
+Write-Host "4. EURECATagent almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
 Write-Host "5. Autentícate con: /login"
 Write-Host "6. O configura tu API key: `$env:ANTHROPIC_API_KEY='your-key'"
 Write-Host "7. Comprueba el router: /router-status"

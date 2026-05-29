@@ -40,11 +40,11 @@ set "AGENT_CONFIG_DIR=%USERPROFILE%\.pi\agent"
 set "AGENT_BIN_DIR=%AGENT_CONFIG_DIR%\bin"
 set "WRAPPER_PATH=%AGENT_BIN_DIR%\pi.cmd"
 
-echo Instalando Pi coding agent...
+echo Instalando EURECATagent...
 echo.
 call npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 if errorlevel 1 (
-    echo [FAIL] Pi installation failed
+    echo [FAIL] EURECATagent installation failed
     pause
     exit /b 1
 )
@@ -65,7 +65,7 @@ if %errorlevel% geq 4 (
 )
 echo [OK] Configuración copiada en %AGENT_CONFIG_DIR%
 
-echo Instalando y activando paquetes de Pi...
+echo Instalando y activando paquetes...
 set "PI_CMD="
 where pi >nul 2>nul
 if %errorlevel% equ 0 (
@@ -108,7 +108,7 @@ set "PATH=%AGENT_BIN_DIR%;%PATH%"
 echo [OK] pi-subagents instalado y activo
 echo [OK] pi-mcp-adapter instalado y activo
 echo [OK] @catdaemon/pi-code-intelligence instalado y activo
-echo [OK] Launcher de Pi orientado a proyecto instalado en %WRAPPER_PATH%
+echo [OK] EURECATagent instalado en %WRAPPER_PATH%
 
 echo.
 echo ╔════════════════════════════════════════╗
@@ -118,9 +118,9 @@ echo.
 
 where pi >nul 2>nul
 if %errorlevel% equ 0 (
-    echo [OK] Pi ya está disponible en tu PATH
+    echo [OK] EURECATagent ya está disponible en tu PATH
 ) else (
-    echo [WARN] El comando Pi no está disponible todavía en tu PATH.
+    echo [WARN] El comando EURECATagent no está disponible todavía en tu PATH.
     echo        Cierra y vuelve a abrir Command Prompt o PowerShell para refrescar tu PATH.
 )
 
@@ -128,8 +128,8 @@ echo.
 echo Próximos pasos:
 echo 1. Validación opcional: verify.bat
 echo 2. Ve a tu directorio de proyecto: cd C:\path\to\your\project
-echo 3. Inicia Pi: pi
-echo 4. Pi almacenará la memoria de Code Intelligence en ^<project^>\.eurecat-data
+echo 3. Inicia EURECATagent: pi
+echo 4. EURECATagent almacenará la memoria de Code Intelligence en ^<project^>\.eurecat-data
 echo 5. Autentícate con: /login
 echo 6. O configura tu API key: set ANTHROPIC_API_KEY=your-key
 echo 7. Comprueba el router: /router-status

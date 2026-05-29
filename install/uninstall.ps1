@@ -19,7 +19,7 @@ Write-Header "EURECAT agent Uninstaller"
 
 $agentConfigDir = Join-Path $HOME ".pi\agent"
 
-Write-Host "This will uninstall Pi from your system and remove EURECAT configuration from $agentConfigDir." -ForegroundColor $Yellow
+Write-Host "This will uninstall EURECATagent and remove its configuration from $agentConfigDir." -ForegroundColor $Yellow
 Write-Host ""
 
 $confirmation = Read-Host "Are you sure? (y/n)"
@@ -29,7 +29,7 @@ if ($confirmation -ne "y" -and $confirmation -ne "Y") {
 }
 
 Write-Host ""
-Write-Host "Removing Pi packages managed by EURECAT..." -ForegroundColor $Yellow
+Write-Host "Removing EURECAT packages..." -ForegroundColor $Yellow
 Write-Host ""
 
 $piExecutable = $null
@@ -50,13 +50,13 @@ if ($piExecutable) {
     & $piExecutable remove npm:pi-subagents 2>$null
 }
 
-Write-Host "Uninstalling Pi coding agent..." -ForegroundColor $Yellow
+Write-Host "Uninstalling EURECATagent..." -ForegroundColor $Yellow
 Write-Host ""
 
-# Uninstall Pi using npm
+# Uninstall the underlying agent using npm
 npm uninstall -g @earendil-works/pi-coding-agent
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Pi uninstallation failed." -ForegroundColor $Red
+    Write-Host "EURECATagent uninstallation failed." -ForegroundColor $Red
     Read-Host "Press Enter to close"
     exit $LASTEXITCODE
 }
@@ -121,12 +121,12 @@ foreach ($dir in $dirsToCleanup) {
 }
 
 Write-Host ""
-Write-Header "Pi uninstalled successfully!"
+Write-Header "EURECATagent uninstalled successfully!"
 Write-Host ""
 Write-Host "EURECAT configuration removed from $agentConfigDir" -ForegroundColor $Green
 Write-Host ""
 
-Write-Host "If you installed Pi with a different package manager:" -ForegroundColor $Yellow
+Write-Host "If you installed EURECATagent with a different package manager:" -ForegroundColor $Yellow
 Write-Host "  - pnpm: pnpm remove -g @earendil-works/pi-coding-agent"
 Write-Host "  - Yarn: yarn global remove @earendil-works/pi-coding-agent"
 Write-Host "  - Bun:  bun uninstall -g @earendil-works/pi-coding-agent"

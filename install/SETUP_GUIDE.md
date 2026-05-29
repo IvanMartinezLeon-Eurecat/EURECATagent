@@ -16,7 +16,7 @@ Este archivo complementa `install/README.md`:
 - [Instalación recomendada](#instalación-recomendada)
 - [Instalación manual y límites](#instalación-manual-y-límites)
 - [Validación paso a paso](#validación-paso-a-paso)
-- [Diagnóstico dentro de Pi](#diagnóstico-dentro-de-pi)
+- [Diagnóstico](#diagnóstico)
 - [Problemas frecuentes](#problemas-frecuentes)
 - [Checklist de soporte](#checklist-de-soporte)
 
@@ -202,7 +202,7 @@ verify.bat
 
 ---
 
-## Diagnóstico dentro de Pi
+## Diagnóstico
 
 Una vez instalado, entra en cualquier repositorio y ejecuta:
 
@@ -357,7 +357,7 @@ Antes de pedir ayuda, recopila esta información:
 - existencia de `~/.pi/agent/chains/generic-implement-safe.chain.md`
 - existencia de `~/.pi/agent/chains/generic-research-and-plan.chain.md`
 
-### Dentro de Pi
+### Una vez arrancado
 - resultado de `/router-status`
 - resultado de `/code-intelligence-doctor`
 - si `/mcp` muestra `context-mode`

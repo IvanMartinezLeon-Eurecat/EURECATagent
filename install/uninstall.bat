@@ -12,7 +12,7 @@ echo.
 
 set "AGENT_CONFIG_DIR=%USERPROFILE%\.pi\agent"
 
-echo This will uninstall Pi from your system and remove EURECAT configuration from %AGENT_CONFIG_DIR%.
+echo This will uninstall EURECATagent and remove its configuration from %AGENT_CONFIG_DIR%.
 set /p confirmation="Are you sure? (y/n): "
 
 if /i not "%confirmation%"=="y" (
@@ -22,7 +22,7 @@ if /i not "%confirmation%"=="y" (
 )
 
 echo.
-echo Removing Pi packages managed by EURECAT...
+echo Removing EURECAT packages...
 echo.
 
 set "PI_CMD="
@@ -44,12 +44,12 @@ if defined PI_CMD (
 )
 
 echo.
-echo Uninstalling Pi coding agent...
+echo Uninstalling EURECATagent...
 echo.
 
 call npm uninstall -g @earendil-works/pi-coding-agent
 if errorlevel 1 (
-    echo Pi uninstallation failed.
+    echo EURECATagent uninstallation failed.
     pause
     exit /b 1
 )
@@ -97,13 +97,13 @@ if exist "%AGENT_CONFIG_DIR%\npm\node_modules\pi-subagents" rd /s /q "%AGENT_CON
 
 echo.
 echo ╔════════════════════════════════════════╗
-echo ║  Pi uninstalled successfully!          ║
+echo ║  EURECATagent uninstalled successfully!║
 echo ╚════════════════════════════════════════╝
 echo.
 echo [OK] EURECAT configuration removed from %AGENT_CONFIG_DIR%
 echo.
 
-echo If you installed Pi with a different package manager:
+echo If you installed EURECATagent with a different package manager:
 echo   - pnpm: pnpm remove -g @earendil-works/pi-coding-agent
 echo   - Yarn: yarn global remove @earendil-works/pi-coding-agent
 echo   - Bun:  bun uninstall -g @earendil-works/pi-coding-agent

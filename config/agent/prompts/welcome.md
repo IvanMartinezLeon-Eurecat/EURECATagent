@@ -1,18 +1,11 @@
 <!--
-/welcome — Muestra los comandos y flujos disponibles
+/welcome — Muestra los comandos y flujos disponibles en EURECATagent
 -->
 # EURECATagent — Comandos rápidos
 
-## Instalación
-
-```bash
-# Una vez instalado, Pi ya está disponible en tu PATH
-pi
-```
-
 ## Subagentes y chains
 
-Usa estos comandos dentro de Pi para delegar trabajo:
+Delega trabajo a especialistas:
 
 ```
 /run-chain generic-implement-safe -- describe tu tarea aquí
@@ -29,13 +22,25 @@ Usa estos comandos dentro de Pi para delegar trabajo:
 /run generic-doc-writer "Escribe un README para este módulo"
 ```
 
+## Sesiones
+
+```
+/session      - información de la sesión actual
+/resume       - explorar sesiones anteriores
+/tree         - navegar ramas de la sesión
+/export       - exportar sesión a HTML
+/name <texto> - poner nombre a la sesión actual
+```
+
 ## Diagnóstico
 
 ```
-/router-status        - estado del routing y capacidades
-/code-intelligence-doctor
-/enable-code-intelligence
-/mcp                  - herramientas de contexto pesado
+/router-status                - estado del routing y capacidades
+/code-intelligence-doctor     - diagnosticar code intelligence
+/enable-code-intelligence     - activar en el repo actual
+/code-intelligence-review     - revisión estructurada de cambios
+/code-intelligence-learnings  - ver learnings del proyecto
+/mcp                          - herramientas de contexto pesado
 ```
 
 ## Atajos
@@ -44,6 +49,7 @@ Usa estos comandos dentro de Pi para delegar trabajo:
 /settings             - configuración del agente
 /model                - cambiar modelo
 /theme                - cambiar tema
+/welcome              - mostrar esta ayuda
 ```
 
 ## Skills activas
