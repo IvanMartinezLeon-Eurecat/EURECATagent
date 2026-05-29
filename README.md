@@ -201,20 +201,20 @@ Requisitos mínimos:
 **macOS / Linux / Windows (Git Bash / WSL):**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.sh | sh
 ```
 
 **Windows PowerShell:**
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
 ```bat
-curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.bat -o install.bat && install.bat
+curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.bat -o install.bat && install.bat
 ```
 
 #### Opción desde el repositorio clonado

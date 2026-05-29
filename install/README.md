@@ -96,7 +96,7 @@ Instala EURECATagent sin necesidad de clonar el repositorio.
 ### macOS / Linux / Windows (Git Bash / WSL)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.sh | sh
 ```
 
 > También funciona en Windows si usas **Git Bash** o **WSL**.
@@ -106,25 +106,25 @@ curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATage
 ```powershell
 # Ejecutar como Administrador (recomendado) o usuario
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.ps1 | iex
 ```
 
 ### Windows CMD
 
 ```bat
-curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.bat -o install.bat && install.bat
+curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.bat -o install.bat && install.bat
 ```
 
 ### Instalar una versión específica
 
 ```bash
 # Por variable de entorno (Unix)
-INSTALL_VERSION=v1.0.0 curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.sh | sh
+INSTALL_VERSION=v1.0.0 curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.sh | sh
 ```
 
 ```powershell
 # Versión específica en PowerShell
-$env:INSTALL_VERSION='v1.0.0'; iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.ps1 | iex
+$env:INSTALL_VERSION='v1.0.0'; iwr -useb https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.ps1 | iex
 ```
 
 ---
@@ -531,10 +531,10 @@ gh release create v1.2.3 \
 
 ### Opción 3: GitHub RAW (desarrollo)
 
-Sin releases, apuntando directamente a `main`:
+Sin releases, apuntando directamente a la rama `release`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/IvanMartinezLeon-Eurecat/EURECATagent/release/install.sh | sh
 ```
 
 > ⚠ **RAW no está pensado para producción.** Para instalaciones reproducibles, usa siempre un tag versionado.
