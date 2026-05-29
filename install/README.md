@@ -349,18 +349,76 @@ Esta configuración instala `pi-subagents` y además copia una capa genérica re
 - `generic-context-builder` → construye contexto compacto y accionable antes de planificar o editar
 - `generic-planner` → crea un plan mínimo y ejecutable
 - `generic-worker` → implementa cambios pequeños y validados como **single writer**
+- `generic-fixer` → 🆕 arregla bugs rápido sin planificador, con diagnóstico y parche mínimo
 - `generic-reviewer` → revisa planes, diffs e implementación con evidencia
 - `generic-parallel-review` → orquesta revisión paralela con varios ángulos y devuelve una síntesis única
+- `generic-doc-writer` → 🆕 escribe y mejora documentación técnica, READMEs y guías
 
 ### Chains genéricas
 
 - `generic-discovery` → `scout` + `generic-context-builder`
 - `generic-implement-safe` → `scout` + `generic-planner` + `generic-worker` + `generic-reviewer`
+- `generic-fix-bug` → 🆕 `scout` + `generic-fixer` + `generic-reviewer` (bugs rápidos, sin planner)
 - `generic-research-and-plan` → `researcher` + `scout` + `generic-planner`
 
-### Cuándo usarlas
+### Optimización de costes: modelos por subagente
 
-#### `generic-discovery`
+Cada subagente puede usar un modelo diferente al del agente principal. Esto permite gastar modelos baratos en tareas de lectura rápida y modelos potentes solo cuando toca planificar o implementar.
+
+**Estrategia recomendada:**
+
+| Subagente | Modelo sugerido | Coste | Motivo |
+|---|---|---|---|
+| **scout** | `gpt-5-mini` / `gemini-2.5-flash` | Bajo | Solo lectura, busca archivos |
+| **context-builder** | `gpt-5-mini` / `gemini-2.5-flash` | Bajo | Solo lectura, sintetiza contexto |
+| **planner** | `claude-sonnet-4` | Medio | Planificación, necesita razonamiento |
+| **worker** | `claude-sonnet-4` | Medio | Implementación, necesita precisión |
+| **reviewer** | `claude-sonnet-4` | Medio | Revisión, necesita criterio |
+
+**Cómo configurarlo en `~/.pi/agent/settings.json`:**
+
+```json
+{
+  "subagents": {
+    "agentOverrides": {
+      "scout": {
+        "model": "openai/gpt-5-mini",
+        "thinking": "off"
+      },
+      "context-builder": {
+        "model": "openai/gpt-5-mini",
+        "thinking": "off"
+      },
+      "planner": {
+        "model": "anthropic/claude-sonnet-4",
+        "thinking": "high"
+      },
+      "worker": {
+        "model": "anthropic/claude-sonnet-4",
+        "thinking": "high"
+      },
+      "reviewer": {
+        "model": "anthropic/claude-sonnet-4",
+        "thinking": "high"
+      }
+    }
+  }
+}
+```
+
+También se puede configurar por paso en una chain o inline al lanzar un agente:
+
+```text
+/run reviewer[model=anthropic/claude-sonnet-4] "Revisa este código"
+```
+
+> ⚡ **Ahorro estimado**: Usando `gpt-5-mini` para scout y context-builder, reduces el coste de esas fases ~10x sin perder calidad en el resultado final.
+
+---
+
+## Cuándo usarlas
+
+### `generic-discovery`
 Úsala cuando todavía no sabes:
 - dónde está implementada una funcionalidad
 - qué archivos deberías revisar primero
@@ -379,6 +437,15 @@ Ejemplo:
 
 ```text
 /run-chain generic-implement-safe -- aplicar este refactor siguiendo los patrones existentes
+```
+
+#### `generic-fix-bug`
+Úsala para bugs que requieren diagnóstico, parche mínimo y validación rápida. Sin planificador, va directo al grano.
+
+Ejemplo:
+
+```text
+/run-chain generic-fix-bug -- el login falla con 401 aunque las credenciales son correctas
 ```
 
 #### `generic-research-and-plan`

@@ -6,7 +6,7 @@ thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
-skills: review, testing, security
+skills: review, testing, security, workflow-coordination
 output: review-summary.md
 progress: true
 ---

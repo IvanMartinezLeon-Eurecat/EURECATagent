@@ -16,7 +16,7 @@ type CapabilityState = {
   contextModeConfigPath?: string;
 };
 
-type PromptMode = "general" | "structural" | "debug-heavy" | "review";
+type PromptMode = "general" | "structural" | "debug-heavy" | "review" | "implement";
 
 type RouterState = {
   lastPromptMode: PromptMode;
@@ -98,6 +98,10 @@ export default function aiRouterExtension(pi: ExtensionAPI) {
         : "Use focused reads and built-in tools for review";
     }
 
+    if (routerState.lastPromptMode === "implement") {
+      return "Delegate to generic-implement-safe chain via subagent tool";
+    }
+
     return "Use built-in tools normally; prefer code-intelligence/context-mode when clearly beneficial";
   }
 
@@ -159,9 +163,8 @@ export default function aiRouterExtension(pi: ExtensionAPI) {
     }
 
     if (capabilities.subagentsInstalled) {
-      for (const suggestion of getSubagentSuggestions(promptText, routerState.lastPromptMode)) {
-        parts.push(suggestion);
-      }
+      parts.push("");
+      parts.push(...getSubagentInstructions(promptText, routerState.lastPromptMode));
     }
 
     parts.push("- Once you know the relevant files, switch to the built-in `read`, `edit`, `write`, and focused `bash` commands.");
@@ -340,38 +343,55 @@ function classifyPrompt(prompt: string): PromptMode {
     return "review";
   }
 
+  if (/(implement|implementar|refactor|refactorizar|fix|arregla|bug|feature|change|cambio|modify|modificar|update|actualizar|build|crear)/.test(normalized)) {
+    return "implement";
+  }
+
   return "general";
 }
 
-function getSubagentSuggestions(prompt: string, mode: PromptMode): string[] {
+function getSubagentInstructions(prompt: string, mode: PromptMode): string[] {
   const normalized = prompt.toLowerCase();
-  const suggestions: string[] = [];
+  const instructions: string[] = [];
+
+  instructions.push("### Subagent Dispatch");
+  instructions.push("You have the `subagent` tool available. Use it to delegate work to specialized subagents.");
+  instructions.push("When the user's request matches one of the patterns below, you MUST dispatch the corresponding chain or agent instead of doing the work yourself:");
+  instructions.push("");
 
   if (mode === "structural") {
-    suggestions.push(
-      "- If the task spans multiple files or the codebase area is unclear, consider `/run-chain generic-discovery -- <task>` or ask for `generic-discovery` to build reusable context before editing.",
-    );
+    instructions.push("**Structural discovery** → Use `subagent` to run `generic-discovery` chain:");
+    instructions.push("  subagent({ chainName: \"generic-discovery\", task: \"<original request>\" })");
+    instructions.push("");
   }
 
   if (mode === "review") {
-    suggestions.push(
-      "- For a deeper delegated review, consider `generic-reviewer`, `generic-parallel-review`, or a reviewer fanout when the diff is large or risky.",
-    );
+    instructions.push("**Code review** → Use `subagent` to run `generic-parallel-review`:");
+    instructions.push("  subagent({ agent: \"generic-parallel-review\", task: \"<original request>\" })");
+    instructions.push("");
   }
 
   if (/(implement|implementation|implementar|refactor|refactorizar|fix|arregla|bug|feature|change|cambio|modify|modificar|update|actualizar|build|crear)/.test(normalized)) {
-    suggestions.push(
-      "- For approved multi-step implementation work, consider `/run-chain generic-implement-safe -- <task>` to scout, plan, implement, and review with a single writer.",
-    );
+    instructions.push("**Implementation / changes** → Use `subagent` to run `generic-implement-safe` chain:");
+    instructions.push("  subagent({ chainName: \"generic-implement-safe\", task: \"<original request>\" })");
+    instructions.push("");
   }
 
   if (/(research|investiga|documentation|documentación|docs|compare|comparar|library|librer|framework|best practice|patrón|approach|enfoque)/.test(normalized)) {
-    suggestions.push(
-      "- When you need external references plus local code context, consider `/run-chain generic-research-and-plan -- <task>`.",
-    );
+    instructions.push("**Research / investigation** → Use `subagent` to run `generic-research-and-plan` chain:");
+    instructions.push("  subagent({ chainName: \"generic-research-and-plan\", task: \"<original request>\" })");
+    instructions.push("");
   }
 
-  return Array.from(new Set(suggestions));
+  instructions.push("**Fallback**: If the request does not match any pattern above, handle it directly with built-in tools.");
+  instructions.push("");
+  instructions.push("Dispatch rules:");
+  instructions.push("- Pass the user's original request as the `task` parameter.");
+  instructions.push("- After the subagent returns, present the result to the user. Do NOT re-implement what the subagent already did.");
+  instructions.push("- If the subagent reports a blocker or asks a question, relay it to the user.");
+  instructions.push("- Do not modify files while a worker subagent is running. Let the subagent be the single writer.");
+
+  return instructions;
 }
 
 function shouldWarnAboutBroadStructuralSearch(command: string, capabilities: CapabilityState, state: RouterState): boolean {
