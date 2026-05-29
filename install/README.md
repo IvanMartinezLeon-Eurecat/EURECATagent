@@ -89,7 +89,49 @@ npm --version
 
 ---
 
-## Instalación rápida
+## Instalación con un solo comando (curl / iwr)
+
+Instala EURECATagent sin necesidad de clonar el repositorio.
+
+### macOS / Linux / Windows (Git Bash / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.sh | sh
+```
+
+> También funciona en Windows si usas **Git Bash** o **WSL**.
+
+### Windows PowerShell
+
+```powershell
+# Ejecutar como Administrador (recomendado) o usuario
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+iwr -useb https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.ps1 | iex
+```
+
+### Windows CMD
+
+```bat
+curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.bat -o install.bat && install.bat
+```
+
+### Instalar una versión específica
+
+```bash
+# Por variable de entorno (Unix)
+INSTALL_VERSION=v1.0.0 curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.sh | sh
+```
+
+```powershell
+# Versión específica en PowerShell
+$env:INSTALL_VERSION='v1.0.0'; iwr -useb https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.ps1 | iex
+```
+
+---
+
+## Instalación desde el repositorio
+
+Si ya tienes clonado el repositorio:
 
 ### Linux / macOS
 
@@ -445,6 +487,61 @@ Las verificaciones comprueban, entre otros puntos:
 - `@catdaemon/pi-code-intelligence` se usa para descubrimiento estructural, impacto, review y learnings por repositorio.
 - `context-mode` sigue siendo la vía recomendada para logs grandes, outputs pesados y procesamiento de contexto extenso.
 - La extensión `ai-router` no sustituye a las tools nativas de Pi: ayuda a decidir **qué mirar primero** y **con qué herramienta conviene empezar**.
+
+---
+
+## Publicar un release
+
+Para que el instalador `curl | sh` funcione, los scripts deben estar disponibles en una URL.
+
+### Opción 1: Automático con GitHub Actions (recomendado)
+
+El workflow `.github/workflows/release.yml` ya está configurado. Solo tienes que:
+
+```bash
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+Automáticamente se:
+1. Genera el tarball
+2. Crea un GitHub Release con los archivos adjuntos
+3. Genera notas de release automáticas
+
+### Opción 2: Manual desde terminal
+
+```bash
+# 1. Generar el tarball
+bash scripts/build-release.sh v1.2.3
+
+# 2. Crear tag y subirlo
+git tag v1.2.3
+git push origin v1.2.3
+
+# 3. Crear release con gh CLI
+gh release create v1.2.3 \
+  dist/eurecatagent-v1.2.3.tar.gz \
+  dist/eurecatagent.tar.gz \
+  install/install.sh \
+  install/install.ps1 \
+  install/install.bat \
+  --title "v1.2.3" \
+  --notes "..."
+```
+
+### Opción 3: GitHub RAW (desarrollo)
+
+Sin releases, apuntando directamente a `main`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/eurecat/EURECATagent/main/install.sh | sh
+```
+
+> ⚠ **RAW no está pensado para producción.** Para instalaciones reproducibles, usa siempre un tag versionado.
+
+### Opción 3: Dominio propio
+
+Con un dominio propio (`eurecatagent.dev`), sirve el script desde un CDN o haz un redirect a GitHub RAW.
 
 ---
 
