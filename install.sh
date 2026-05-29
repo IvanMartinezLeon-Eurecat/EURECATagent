@@ -15,7 +15,7 @@
 #
 set -euo pipefail
 
-REPO_OWNER="eurecat"
+REPO_OWNER="IvanMartinezLeon-Eurecat"
 REPO_NAME="EURECATagent"
 VERSION="${INSTALL_VERSION:-latest}"
 
