@@ -143,6 +143,16 @@ New-Item -ItemType Directory -Path $agentBinDir -Force | Out-Null
 $wrapperTemplate = Get-Content -Path $wrapperTemplatePath -Raw
 $wrapperContent = $wrapperTemplate.Replace('__PI_REAL_BIN__', $piExecutable)
 Set-Content -Path $wrapperPath -Value $wrapperContent -Encoding ASCII
+
+# Crear comando eurecatagent
+$eureWrapperTemplatePath = Join-Path $templateDir "eurecatagent.cmd"
+if (Test-Path $eureWrapperTemplatePath) {
+    $eureCatAgentPath = Join-Path $agentBinDir "eurecatagent.cmd"
+    $eureTemplate = Get-Content -Path $eureWrapperTemplatePath -Raw
+    $eureContent = $eureTemplate.Replace('__PI_REAL_BIN__', $piExecutable)
+    Set-Content -Path $eureCatAgentPath -Value $eureContent -Encoding ASCII
+}
+
 Ensure-AgentBinOnUserPath -AgentBinDir $agentBinDir
 $env:Path = "$agentBinDir;$env:Path"
 
@@ -166,7 +176,7 @@ Write-Host ""
 Write-Info "Próximos pasos:"
 Write-Host "1. Validación opcional: .\verify.ps1"
 Write-Host "2. Ve a tu directorio de proyecto: cd C:\path\to\your\project"
-Write-Host "3. Inicia EURECATagent: pi"
+Write-Host "3. Inicia EURECATagent: eurecatagent"
 Write-Host "4. EURECATagent almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
 Write-Host "5. Autentícate con: /login"
 Write-Host "6. O configura tu API key: `$env:ANTHROPIC_API_KEY='your-key'"

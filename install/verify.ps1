@@ -34,6 +34,7 @@ Write-Host ""
 Check-Command "node" "Node.js"
 Check-Command "npm" "npm"
 Check-Command "pi" "EURECATagent"
+Check-Command "eurecatagent" "EURECATagent CLI"
 
 Write-Host ""
 Write-Host "== Variables de Entorno (Opcional) ==" -ForegroundColor $Blue

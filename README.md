@@ -77,7 +77,7 @@ Se copia `config/agent/*` a `~/.pi/agent`, incluyendo:
 ### Integraciones operativas
 - `context-mode` como MCP lazy-loaded
 - extensión `ai-router` para routing híbrido
-- launcher `pi` orientado a contexto por proyecto
+- launcher `pi` (comando `eurecatagent`) orientado a contexto por proyecto
 
 ---
 
@@ -91,7 +91,7 @@ Contiene scripts multiplataforma y documentación operativa.
 Responsabilidades:
 - instalar EURECATagent y paquetes asociados
 - copiar configuración al home del usuario
-- dejar disponible el wrapper `pi`
+- dejar disponible el comando `eurecatagent` (y `pi` como alias)
 - validar instalación y entorno
 - documentar troubleshooting y flujo recomendado
 

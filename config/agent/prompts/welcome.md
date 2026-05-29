@@ -3,6 +3,15 @@
 -->
 # EURECATagent — Comandos rápidos
 
+Para arrancar EURECATagent desde la terminal:
+
+```bash
+eurecatagent
+# o también: pi
+```
+
+Una vez dentro, usa estos comandos:
+
 ## Subagentes y chains
 
 Delega trabajo a especialistas:

@@ -45,7 +45,7 @@ Los scripts de este directorio realizan estas acciones:
    - `@catdaemon/pi-code-intelligence`
 4. Configuran `context-mode` en `mcp.json`.
 5. Dejan disponible la extensión `ai-router`.
-6. Preparan un launcher `pi` orientado a contexto por proyecto.
+6. Preparan el comando `eurecatagent` (y `pi` como alias) orientado a contexto por proyecto.
 
 El objetivo es disponer de una **base de trabajo coherente para EURECAT** en cualquier proyecto.
 
@@ -520,7 +520,7 @@ verify.bat
 
 Las verificaciones comprueban, entre otros puntos:
 
-- presencia de `node`, `npm` y `pi`
+- presencia de `node`, `npm` y `eurecatagent` / `pi`
 - instalación y activación de `pi-subagents`
 - instalación y activación de `pi-mcp-adapter`
 - instalación y activación de `@catdaemon/pi-code-intelligence`
@@ -618,7 +618,7 @@ Si quieres el flujo mínimo recomendado:
 
 1. ejecuta el instalador de tu plataforma
 2. valida con `verify.*`
-3. abre `pi` dentro de un proyecto
+3. ejecuta `eurecatagent` dentro de un proyecto
 4. ejecuta `/router-status`
 5. activa Code Intelligence en el repo
 6. prueba al menos uno de estos flujos: `generic-discovery` o `generic-implement-safe`

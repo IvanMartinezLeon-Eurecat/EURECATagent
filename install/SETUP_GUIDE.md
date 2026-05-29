@@ -28,7 +28,7 @@ Usa este documento si necesitas alguna de estas tareas:
 
 - instalar el stack en una máquina nueva
 - entender qué valida realmente `verify.*`
-- diagnosticar por qué `pi` no aparece en PATH
+- diagnosticar por qué `eurecatagent` no aparece en PATH
 - revisar por qué falta `pi-code-intelligence` o `context-mode`
 - confirmar si el router híbrido está funcionando correctamente
 
@@ -92,7 +92,7 @@ install.bat
    - `@catdaemon/pi-code-intelligence`
 4. configura `context-mode`
 5. deja disponible la extensión `ai-router`
-6. crea o actualiza el launcher `pi` preparado para uso por proyecto
+6. crea o actualiza el comando `eurecatagent` (y `pi` como alias)
 
 ---
 
@@ -256,7 +256,7 @@ npm --version
 
 Causa probable:
 - la terminal no ha recargado PATH
-- el wrapper `pi` no está en el PATH actual
+- el comando `eurecatagent` no está en el PATH actual
 
 Acción en Linux/macOS:
 

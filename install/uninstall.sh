@@ -88,6 +88,12 @@ rm -rf "${AGENT_CONFIG_DIR}/skills/ux"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/@catdaemon/pi-code-intelligence"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/pi-mcp-adapter"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/pi-subagents"
+
+# Eliminar comandos
+rm -f "${AGENT_CONFIG_DIR}/bin/eurecatagent"
+rm -f "${AGENT_CONFIG_DIR}/bin/pi"
+rmdir "${AGENT_CONFIG_DIR}/bin" 2>/dev/null || true
+
 rmdir "${AGENT_CONFIG_DIR}/extensions" 2>/dev/null || true
 rmdir "${AGENT_CONFIG_DIR}/themes" 2>/dev/null || true
 rmdir "${AGENT_CONFIG_DIR}/agents" 2>/dev/null || true

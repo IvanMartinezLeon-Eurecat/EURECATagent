@@ -102,6 +102,12 @@ if not exist "%TEMPLATE_DIR%\pi.cmd" (
 if not exist "%AGENT_BIN_DIR%" mkdir "%AGENT_BIN_DIR%"
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$template = Get-Content -Path '%TEMPLATE_DIR%\pi.cmd' -Raw; $content = $template.Replace('__PI_REAL_BIN__', '%PI_CMD%'); Set-Content -Path '%WRAPPER_PATH%' -Value $content -Encoding ASCII"
 if errorlevel 1 exit /b 1
+
+REM Crear comando eurecatagent
+if exist "%TEMPLATE_DIR%\eurecatagent.cmd" (
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "$template = Get-Content -Path '%TEMPLATE_DIR%\eurecatagent.cmd' -Raw; $content = $template.Replace('__PI_REAL_BIN__', '%PI_CMD%'); Set-Content -Path '%AGENT_BIN_DIR%\eurecatagent.cmd' -Value $content -Encoding ASCII"
+)
+
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$dir = '%AGENT_BIN_DIR%'; $userPath = [Environment]::GetEnvironmentVariable('Path', 'User'); $parts = @(); if ($userPath) { $parts = $userPath.Split(';') | Where-Object { $_ -and $_.Trim() -ne '' } }; if (-not ($parts -contains $dir)) { [Environment]::SetEnvironmentVariable('Path', (($dir + ';' + ($parts -join ';')).Trim(';')), 'User') }"
 set "PATH=%AGENT_BIN_DIR%;%PATH%"
 
@@ -128,7 +134,7 @@ echo.
 echo Próximos pasos:
 echo 1. Validación opcional: verify.bat
 echo 2. Ve a tu directorio de proyecto: cd C:\path\to\your\project
-echo 3. Inicia EURECATagent: pi
+echo 3. Inicia EURECATagent: eurecatagent
 echo 4. EURECATagent almacenará la memoria de Code Intelligence en ^<project^>\.eurecat-data
 echo 5. Autentícate con: /login
 echo 6. O configura tu API key: set ANTHROPIC_API_KEY=your-key

@@ -37,6 +37,7 @@ echo ""
 check_command "node" "Node.js"
 check_command "npm" "npm"
 check_command "pi" "EURECATagent"
+check_command "eurecatagent" "EURECATagent CLI"
 
 echo ""
 echo -e "${BLUE}== Variables de Entorno (Opcional) ==${NC}"

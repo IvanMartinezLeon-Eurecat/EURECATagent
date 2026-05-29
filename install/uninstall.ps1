@@ -92,7 +92,11 @@ $pathsToRemove = @(
     (Join-Path $agentConfigDir "skills\ux"),
     (Join-Path $agentConfigDir "npm\node_modules\@catdaemon\pi-code-intelligence"),
     (Join-Path $agentConfigDir "npm\node_modules\pi-mcp-adapter"),
-    (Join-Path $agentConfigDir "npm\node_modules\pi-subagents")
+    (Join-Path $agentConfigDir "npm\node_modules\pi-subagents"),
+    (Join-Path $agentConfigDir "bin\eurecatagent"),
+    (Join-Path $agentConfigDir "bin\eurecatagent.cmd"),
+    (Join-Path $agentConfigDir "bin\pi"),
+    (Join-Path $agentConfigDir "bin\pi.cmd")
 )
 
 foreach ($path in $pathsToRemove) {
