@@ -6,7 +6,7 @@ thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
-skills: review, testing
+skills: review, testing, security
 defaultReads: plan.md, progress.md
 progress: true
 ---

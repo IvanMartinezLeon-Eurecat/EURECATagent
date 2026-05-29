@@ -2,24 +2,30 @@
   "theme": "eurecat-theme",
   "quietStartup": true,
   "hideThinkingBlock": true,
+  "defaultThinkingLevel": "low",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 8192,
+    "keepRecentTokens": 12000
+  },
   "subagents": {
     "agentOverrides": {
       "context-builder": {
-        "thinking": "high"
+        "thinking": "low"
       },
       "planner": {
-        "thinking": "high",
+        "thinking": "low",
         "defaultContext": "fork"
       },
       "reviewer": {
-        "thinking": "high"
+        "thinking": "low"
       },
       "worker": {
-        "thinking": "high",
+        "thinking": "low",
         "defaultContext": "fork"
       },
       "oracle": {
-        "thinking": "high",
+        "thinking": "low",
         "defaultContext": "fork"
       }
     }

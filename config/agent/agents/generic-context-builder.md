@@ -6,7 +6,7 @@ thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
-skills: architecture, learn
+skills: architecture, learn, api-design
 output: context.md
 progress: true
 ---

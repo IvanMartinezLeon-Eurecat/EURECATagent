@@ -7,7 +7,7 @@ systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
 defaultContext: fork
-skills: fix, testing
+skills: fix, testing, git
 defaultReads: context.md, plan.md
 progress: true
 ---
