@@ -53,16 +53,6 @@ if ($piExecutable) {
         Write-Host "  ⚠ Web Access no estaba instalado" -ForegroundColor $Yellow
     }
 
-    Write-Host "  Desinstalando Lean Context..." -ForegroundColor $Yellow
-    & $piExecutable remove npm:pi-lean-ctx >$null 2>$null
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "  ✓ Lean Context desinstalado" -ForegroundColor $Green
-    } else {
-        Write-Host "  ⚠ Lean Context no estaba instalado" -ForegroundColor $Yellow
-    }
-
-
-
     Write-Host "  Desinstalando Code Intelligence..." -ForegroundColor $Yellow
     & $piExecutable remove npm:@catdaemon/pi-code-intelligence >$null 2>$null
     if ($LASTEXITCODE -eq 0) {
@@ -131,7 +121,6 @@ $pathsToRemove = @(
     (Join-Path $agentConfigDir "npm\node_modules\@catdaemon\pi-code-intelligence"),
     (Join-Path $agentConfigDir "npm\node_modules\pi-mcp-adapter"),
     (Join-Path $agentConfigDir "npm\node_modules\pi-subagents"),
-    (Join-Path $agentConfigDir "npm\node_modules\pi-lean-ctx"),
     (Join-Path $agentConfigDir "bin\eurecatagent"),
     (Join-Path $agentConfigDir "bin\eurecatagent.cmd"),
     (Join-Path $agentConfigDir "bin\pi"),

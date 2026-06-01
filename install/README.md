@@ -9,7 +9,6 @@ Este directorio contiene los scripts y documentos necesarios para dejar preparad
 - **adaptador MCP** para integración MCP
 - **code intelligence** para búsqueda semántica e impacto
 - **context-mode** para salidas grandes y contexto pesado
-- **pi-lean-ctx** para compresión de tokens y ahorro de contexto
 - **ai-router** para routing híbrido según el tipo de tarea
 - subagentes y chains genéricas reutilizables entre proyectos
 
@@ -44,7 +43,6 @@ Los scripts de este directorio realizan estas acciones:
    - subagentes
    - adaptador MCP
    - code intelligence
-   - Lean Context (compresión de tokens)
 4. Configuran `context-mode` en `mcp.json`.
 5. Dejan disponible la extensión `ai-router`.
 6. Preparan el comando `eurecatagent` (y `pi` como alias) orientado a contexto por proyecto.

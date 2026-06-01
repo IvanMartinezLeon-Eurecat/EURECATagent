@@ -170,30 +170,6 @@ if ($LASTEXITCODE -eq 0) {
     exit $LASTEXITCODE
 }
 
-Write-Info "Instalando Lean Context (pi-lean-ctx)..."
-
-# lean-ctx binary (Rust) — opcional, para compresión de tokens
-$cargoAvailable = Get-Command cargo -ErrorAction SilentlyContinue
-if ($cargoAvailable) {
-    Write-Info "  Instalando lean-ctx binary via cargo..."
-    $cargoResult = cargo install lean-ctx 2>&1 | Out-String
-    if ($LASTEXITCODE -eq 0) {
-        Write-Success "lean-ctx binary instalado"
-    } else {
-        Write-Warning-Custom "lean-ctx binary: falló la instalación con cargo (opcional)"
-    }
-} else {
-    Write-Warning-Custom "lean-ctx binary: cargo no disponible. Instálalo manualmente con: cargo install lean-ctx"
-}
-
-& $piExecutable install npm:pi-lean-ctx >$null
-if ($LASTEXITCODE -eq 0) {
-    Write-Success "Paquete Lean Context instalado"
-} else {
-    Write-Error-Custom "Error al instalar Lean Context (pi-lean-ctx)"
-    exit $LASTEXITCODE
-}
-
 $wrapperTemplatePath = Join-Path $templateDir "pi.cmd"
 if (-not (Test-Path $wrapperTemplatePath)) {
     Write-Error-Custom "No se encontró la plantilla del wrapper en $wrapperTemplatePath"

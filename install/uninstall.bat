@@ -49,14 +49,6 @@ if defined PI_CMD (
     ) else (
         echo [OK] Web Access desinstalado
     )
-    echo [INFO] Desinstalando Lean Context...
-    call "%PI_CMD%" remove npm:pi-lean-ctx >nul 2>nul
-    if errorlevel 1 (
-        echo [WARN] Lean Context no estaba instalado
-    ) else (
-        echo [OK] Lean Context desinstalado
-    )
-
     echo [INFO] Desinstalando Code Intelligence...
     call "%PI_CMD%" remove npm:@catdaemon/pi-code-intelligence >nul 2>nul
     if errorlevel 1 (
@@ -121,7 +113,6 @@ if exist "%AGENT_CONFIG_DIR%\skills\ux" rd /s /q "%AGENT_CONFIG_DIR%\skills\ux"
 if exist "%AGENT_CONFIG_DIR%\npm\node_modules\@catdaemon\pi-code-intelligence" rd /s /q "%AGENT_CONFIG_DIR%\npm\node_modules\@catdaemon\pi-code-intelligence"
 if exist "%AGENT_CONFIG_DIR%\npm\node_modules\pi-mcp-adapter" rd /s /q "%AGENT_CONFIG_DIR%\npm\node_modules\pi-mcp-adapter"
 if exist "%AGENT_CONFIG_DIR%\npm\node_modules\pi-subagents" rd /s /q "%AGENT_CONFIG_DIR%\npm\node_modules\pi-subagents"
-if exist "%AGENT_CONFIG_DIR%\npm\node_modules\pi-lean-ctx" rd /s /q "%AGENT_CONFIG_DIR%\npm\node_modules\pi-lean-ctx"
 if exist "%AGENT_CONFIG_DIR%\bin\eurecatagent" del /f /q "%AGENT_CONFIG_DIR%\bin\eurecatagent"
 if exist "%AGENT_CONFIG_DIR%\bin\eurecatagent.cmd" del /f /q "%AGENT_CONFIG_DIR%\bin\eurecatagent.cmd"
 if exist "%AGENT_CONFIG_DIR%\bin\pi" del /f /q "%AGENT_CONFIG_DIR%\bin\pi"

@@ -177,34 +177,6 @@ else
 	exit 1
 fi
 
-echo -e "${YELLOW}Instalando Lean Context (pi-lean-ctx)...${NC}"
-
-# lean-ctx binary (Rust) — opcional, para compresión de tokens
-if command -v cargo &>/dev/null; then
-	echo -e "${YELLOW}  Instalando lean-ctx binary via cargo...${NC}"
-	if cargo install lean-ctx 2>/dev/null; then
-		echo -e "${GREEN}✓ lean-ctx binary instalado${NC}"
-	else
-		echo -e "${YELLOW}⚠ lean-ctx binary: falló la instalación con cargo (opcional)${NC}"
-	fi
-elif command -v brew &>/dev/null; then
-	echo -e "${YELLOW}  Instalando lean-ctx binary via brew...${NC}"
-	if brew tap yvgude/lean-ctx 2>/dev/null && brew install lean-ctx 2>/dev/null; then
-		echo -e "${GREEN}✓ lean-ctx binary instalado${NC}"
-	else
-		echo -e "${YELLOW}⚠ lean-ctx binary: falló la instalación con brew (opcional)${NC}"
-	fi
-else
-	echo -e "${YELLOW}⚠ lean-ctx binary: ni cargo ni brew disponibles. Instálalo manualmente: cargo install lean-ctx${NC}"
-fi
-
-if "${PI_BIN}" install npm:pi-lean-ctx >/dev/null 2>&1; then
-	echo -e "${GREEN}✓ Paquete Lean Context instalado${NC}"
-else
-	echo -e "${RED}✗ Error al instalar Lean Context (pi-lean-ctx)${NC}"
-	exit 1
-fi
-
 if [ ! -f "${TEMPLATE_DIR}/pi-unix-wrapper.sh" ]; then
 	echo -e "${RED}✗ Error: No se encontró la plantilla del wrapper en ${TEMPLATE_DIR}/pi-unix-wrapper.sh${NC}"
 	exit 1

@@ -90,7 +90,6 @@ install.bat
    - subagentes
    - adaptador MCP
    - code intelligence
-   - Lean Context (compresión de tokens)
 4. configura `context-mode`
 5. deja disponible la extensión `ai-router`
 6. crea o actualiza el comando `eurecatagent` (y `pi` como alias)
@@ -101,7 +100,7 @@ install.bat
 
 > ⚠ No recomendada. Prefiere el instalador automático (un solo comando curl/iwr).
 
-La instalación manual mínima instala los paquetes base (agente principal, subagentes, adaptador MCP, code intelligence y Lean Context). Ejecuta los comandos equivalentes que aparecen en los scripts de `install/`.
+La instalación manual mínima instala los paquetes base (agente principal, subagentes, adaptador MCP y code intelligence). Ejecuta los comandos equivalentes que aparecen en los scripts de `install/`.
 
 ### Limitación importante
 

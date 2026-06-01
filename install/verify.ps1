@@ -100,21 +100,6 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
         $global:checksFail++
     }
 
-    if ($piPackages -match "pi-lean-ctx") {
-        Write-Host "✓ Lean Context : Instalado y activo" -ForegroundColor $Green
-        $global:checksPass++
-    } else {
-        Write-Host "✗ Lean Context : No detectado en 'pi list'" -ForegroundColor $Red
-        $global:checksFail++
-    }
-
-    if (Get-Command lean-ctx -ErrorAction SilentlyContinue) {
-        Write-Host "✓ lean-ctx binary : $(& lean-ctx --version 2>&1)" -ForegroundColor $Green
-        $global:checksPass++
-    } else {
-        Write-Host "⚠ lean-ctx binary : No instalado (opcional — instala con: cargo install lean-ctx)" -ForegroundColor $Yellow
-    }
-
     $agentMcpConfig = Join-Path $agentConfigDir "mcp.json"
     if ((Test-Path $agentMcpConfig) -and ((Get-Content $agentMcpConfig -Raw) -match '"context-mode"')) {
         Write-Host "✓ context-mode MCP : Configurado en $agentMcpConfig" -ForegroundColor $Green

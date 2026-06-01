@@ -72,7 +72,6 @@ echo -e "${YELLOW}Checking installed packages...${NC}"
 check_pi_package_presence "@catdaemon/pi-code-intelligence" "Code Intelligence"
 check_pi_package_presence "pi-mcp-adapter" "MCP Adapter"
 check_pi_package_presence "pi-subagents" "Coding Agent"
-check_pi_package_presence "pi-lean-ctx" "Lean Context"
 
 echo ""
 echo -e "${YELLOW}Checking subagent config...${NC}"
@@ -101,13 +100,6 @@ if [ -n "${PI_BIN}" ]; then
 		echo -e "${GREEN}  ✓ Web Access desinstalado${NC}"
 	else
 		echo -e "${YELLOW}  ⚠ Web Access no estaba instalado${NC}"
-	fi
-
-	echo -e "${YELLOW}  Desinstalando Lean Context...${NC}"
-	if "${PI_BIN}" remove npm:pi-lean-ctx >/dev/null 2>&1; then
-		echo -e "${GREEN}  ✓ Lean Context desinstalado${NC}"
-	else
-		echo -e "${YELLOW}  ⚠ Lean Context no estaba instalado${NC}"
 	fi
 
 	echo -e "${YELLOW}  Desinstalando Code Intelligence...${NC}"
@@ -167,7 +159,6 @@ rm -rf "${AGENT_CONFIG_DIR}/skills/ux"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/@catdaemon/pi-code-intelligence"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/pi-mcp-adapter"
 rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/pi-subagents"
-rm -rf "${AGENT_CONFIG_DIR}/npm/node_modules/pi-lean-ctx"
 
 # Eliminar comandos
 rm -f "${AGENT_CONFIG_DIR}/bin/eurecatagent"

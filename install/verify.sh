@@ -100,21 +100,6 @@ if command -v pi &>/dev/null; then
 		((CHECKS_FAILED++))
 	fi
 
-	if echo "${PI_LIST}" | grep -q "pi-lean-ctx"; then
-		echo -e "${GREEN}✓ Lean Context${NC}: Instalado y activo"
-		((CHECKS_PASSED++))
-	else
-		echo -e "${RED}✗ Lean Context${NC}: No detectado en 'pi list'"
-		((CHECKS_FAILED++))
-	fi
-
-	if command -v lean-ctx &>/dev/null; then
-		echo -e "${GREEN}✓ lean-ctx binary${NC}: $(lean-ctx --version 2>/dev/null || echo present)"
-		((CHECKS_PASSED++))
-	else
-		echo -e "${YELLOW}⚠ lean-ctx binary${NC}: No instalado (opcional — instala con: cargo install lean-ctx)"
-	fi
-
 	if [ -f "${AGENT_CONFIG_DIR}/mcp.json" ] && grep -q '"context-mode"' "${AGENT_CONFIG_DIR}/mcp.json"; then
 		echo -e "${GREEN}✓ context-mode MCP${NC}: Configurado en ${AGENT_CONFIG_DIR}/mcp.json"
 		((CHECKS_PASSED++))
