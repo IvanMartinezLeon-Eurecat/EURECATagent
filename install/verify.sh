@@ -84,6 +84,30 @@ if command -v pi &> /dev/null; then
         ((CHECKS_FAILED++))
     fi
 
+    if echo "${PI_LIST}" | grep -q "pi-lens"; then
+        echo -e "${GREEN}✓ Lens${NC}: Instalado y activo"
+        ((CHECKS_PASSED++))
+    else
+        echo -e "${RED}✗ Lens${NC}: No detectado en 'pi list'"
+        ((CHECKS_FAILED++))
+    fi
+
+    if echo "${PI_LIST}" | grep -q "pi-web-access"; then
+        echo -e "${GREEN}✓ Web Access${NC}: Instalado y activo"
+        ((CHECKS_PASSED++))
+    else
+        echo -e "${RED}✗ Web Access${NC}: No detectado en 'pi list'"
+        ((CHECKS_FAILED++))
+    fi
+
+    if echo "${PI_LIST}" | grep -q "pi-ask-user"; then
+        echo -e "${GREEN}✓ Ask User${NC}: Instalado y activo"
+        ((CHECKS_PASSED++))
+    else
+        echo -e "${RED}✗ Ask User${NC}: No detectado en 'pi list'"
+        ((CHECKS_FAILED++))
+    fi
+
     if [ -f "${AGENT_CONFIG_DIR}/mcp.json" ] && grep -q '"context-mode"' "${AGENT_CONFIG_DIR}/mcp.json"; then
         echo -e "${GREEN}✓ context-mode MCP${NC}: Configurado en ${AGENT_CONFIG_DIR}/mcp.json"
         ((CHECKS_PASSED++))

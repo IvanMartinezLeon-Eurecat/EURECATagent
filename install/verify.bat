@@ -90,6 +90,33 @@ if %errorlevel% equ 0 (
         set /a checks_fail+=1
     )
 
+    pi list 2>nul | findstr /C:"pi-lens" >nul
+    if !errorlevel! equ 0 (
+        echo [OK] Lens: Instalado y activo
+        set /a checks_pass+=1
+    ) else (
+        echo [FAIL] Lens: No detectado en "pi list"
+        set /a checks_fail+=1
+    )
+
+    pi list 2>nul | findstr /C:"pi-web-access" >nul
+    if !errorlevel! equ 0 (
+        echo [OK] Web Access: Instalado y activo
+        set /a checks_pass+=1
+    ) else (
+        echo [FAIL] Web Access: No detectado en "pi list"
+        set /a checks_fail+=1
+    )
+
+    pi list 2>nul | findstr /C:"pi-ask-user" >nul
+    if !errorlevel! equ 0 (
+        echo [OK] Ask User: Instalado y activo
+        set /a checks_pass+=1
+    ) else (
+        echo [FAIL] Ask User: No detectado en "pi list"
+        set /a checks_fail+=1
+    )
+
     if exist "!AGENT_CONFIG_DIR!\mcp.json" (
         findstr /C:"\"context-mode\"" "!AGENT_CONFIG_DIR!\mcp.json" >nul
         if !errorlevel! equ 0 (

@@ -82,6 +82,30 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
         $global:checksFail++
     }
 
+    if ($piPackages -match "pi-lens") {
+        Write-Host "✓ Lens : Instalado y activo" -ForegroundColor $Green
+        $global:checksPass++
+    } else {
+        Write-Host "✗ Lens : No detectado en 'pi list'" -ForegroundColor $Red
+        $global:checksFail++
+    }
+
+    if ($piPackages -match "pi-web-access") {
+        Write-Host "✓ Web Access : Instalado y activo" -ForegroundColor $Green
+        $global:checksPass++
+    } else {
+        Write-Host "✗ Web Access : No detectado en 'pi list'" -ForegroundColor $Red
+        $global:checksFail++
+    }
+
+    if ($piPackages -match "pi-ask-user") {
+        Write-Host "✓ Ask User : Instalado y activo" -ForegroundColor $Green
+        $global:checksPass++
+    } else {
+        Write-Host "✗ Ask User : No detectado en 'pi list'" -ForegroundColor $Red
+        $global:checksFail++
+    }
+
     $agentMcpConfig = Join-Path $agentConfigDir "mcp.json"
     if ((Test-Path $agentMcpConfig) -and ((Get-Content $agentMcpConfig -Raw) -match '"context-mode"')) {
         Write-Host "✓ context-mode MCP : Configurado en $agentMcpConfig" -ForegroundColor $Green

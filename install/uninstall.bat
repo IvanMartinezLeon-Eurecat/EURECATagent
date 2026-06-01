@@ -35,6 +35,27 @@ if exist "%NPM_GLOBAL_PREFIX%\pi.cmd" set "PI_CMD=%NPM_GLOBAL_PREFIX%\pi.cmd"
 
 :pi_remove_ready
 if defined PI_CMD (
+    echo [INFO] Desinstalando Ask User...
+    call "%PI_CMD%" remove npm:pi-ask-user >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] Ask User no estaba instalado
+    ) else (
+        echo [OK] Ask User desinstalado
+    )
+    echo [INFO] Desinstalando Web Access...
+    call "%PI_CMD%" remove npm:pi-web-access >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] Web Access no estaba instalado
+    ) else (
+        echo [OK] Web Access desinstalado
+    )
+    echo [INFO] Desinstalando Lens...
+    call "%PI_CMD%" remove npm:pi-lens >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] Lens no estaba instalado
+    ) else (
+        echo [OK] Lens desinstalado
+    )
     echo [INFO] Desinstalando Code Intelligence...
     call "%PI_CMD%" remove npm:@catdaemon/pi-code-intelligence >nul 2>nul
     if errorlevel 1 (

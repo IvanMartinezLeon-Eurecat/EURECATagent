@@ -88,6 +88,27 @@ echo ""
 echo -e "${YELLOW}Removing EURECAT packages...${NC}"
 
 if [ -n "${PI_BIN}" ]; then
+    echo -e "${YELLOW}  Desinstalando Ask User...${NC}"
+    if "${PI_BIN}" remove npm:pi-ask-user > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Ask User desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ Ask User no estaba instalado${NC}"
+    fi
+
+    echo -e "${YELLOW}  Desinstalando Web Access...${NC}"
+    if "${PI_BIN}" remove npm:pi-web-access > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Web Access desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ Web Access no estaba instalado${NC}"
+    fi
+
+    echo -e "${YELLOW}  Desinstalando Lens...${NC}"
+    if "${PI_BIN}" remove npm:pi-lens > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Lens desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ Lens no estaba instalado${NC}"
+    fi
+
     echo -e "${YELLOW}  Desinstalando Code Intelligence...${NC}"
     if "${PI_BIN}" remove npm:@catdaemon/pi-code-intelligence > /dev/null 2>&1; then
         echo -e "${GREEN}  ✓ Code Intelligence desinstalado${NC}"

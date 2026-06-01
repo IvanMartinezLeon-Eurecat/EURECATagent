@@ -150,6 +150,33 @@ if ($LASTEXITCODE -eq 0) {
     exit $LASTEXITCODE
 }
 
+Write-Info "Instalando Lens..."
+& $piExecutable install npm:pi-lens >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete Lens instalado"
+} else {
+    Write-Error-Custom "Error al instalar Lens (pi-lens)"
+    exit $LASTEXITCODE
+}
+
+Write-Info "Instalando Web Access..."
+& $piExecutable install npm:pi-web-access >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete Web Access instalado"
+} else {
+    Write-Error-Custom "Error al instalar Web Access (pi-web-access)"
+    exit $LASTEXITCODE
+}
+
+Write-Info "Instalando Ask User..."
+& $piExecutable install npm:pi-ask-user >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete Ask User instalado"
+} else {
+    Write-Error-Custom "Error al instalar Ask User (pi-ask-user)"
+    exit $LASTEXITCODE
+}
+
 $wrapperTemplatePath = Join-Path $templateDir "pi.cmd"
 if (-not (Test-Path $wrapperTemplatePath)) {
     Write-Error-Custom "No se encontró la plantilla del wrapper en $wrapperTemplatePath"

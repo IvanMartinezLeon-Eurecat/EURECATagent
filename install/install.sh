@@ -161,6 +161,30 @@ else
     exit 1
 fi
 
+echo -e "${YELLOW}Instalando Lens...${NC}"
+if "${PI_BIN}" install npm:pi-lens > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete Lens instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar Lens (pi-lens)${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}Instalando Web Access...${NC}"
+if "${PI_BIN}" install npm:pi-web-access > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete Web Access instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar Web Access (pi-web-access)${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}Instalando Ask User...${NC}"
+if "${PI_BIN}" install npm:pi-ask-user > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete Ask User instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar Ask User (pi-ask-user)${NC}"
+    exit 1
+fi
+
 if [ ! -f "${TEMPLATE_DIR}/pi-unix-wrapper.sh" ]; then
     echo -e "${RED}✗ Error: No se encontró la plantilla del wrapper en ${TEMPLATE_DIR}/pi-unix-wrapper.sh${NC}"
     exit 1

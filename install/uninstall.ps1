@@ -37,6 +37,30 @@ if ($piCommand) {
 }
 
 if ($piExecutable) {
+    Write-Host "  Desinstalando Ask User..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-ask-user >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ Ask User desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ Ask User no estaba instalado" -ForegroundColor $Yellow
+    }
+
+    Write-Host "  Desinstalando Web Access..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-web-access >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ Web Access desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ Web Access no estaba instalado" -ForegroundColor $Yellow
+    }
+
+    Write-Host "  Desinstalando Lens..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-lens >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ Lens desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ Lens no estaba instalado" -ForegroundColor $Yellow
+    }
+
     Write-Host "  Desinstalando Code Intelligence..." -ForegroundColor $Yellow
     & $piExecutable remove npm:@catdaemon/pi-code-intelligence >$null 2>$null
     if ($LASTEXITCODE -eq 0) {

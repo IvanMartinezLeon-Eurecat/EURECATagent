@@ -110,6 +110,33 @@ if errorlevel 1 (
 ) else (
     echo [OK] Paquete Code Intelligence instalado
 )
+echo [INFO] Instalando Lens...
+call "%PI_CMD%" install npm:pi-lens >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Lens (pi-lens)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Lens instalado
+)
+echo [INFO] Instalando Web Access...
+call "%PI_CMD%" install npm:pi-web-access >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Web Access (pi-web-access)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Web Access instalado
+)
+echo [INFO] Instalando Ask User...
+call "%PI_CMD%" install npm:pi-ask-user >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Ask User (pi-ask-user)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Ask User instalado
+)
 
 if not exist "%TEMPLATE_DIR%\pi.cmd" (
     echo [FAIL] No se encontró la plantilla del wrapper en %TEMPLATE_DIR%\pi.cmd
