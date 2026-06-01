@@ -53,13 +53,15 @@ if ($piExecutable) {
         Write-Host "  ⚠ Web Access no estaba instalado" -ForegroundColor $Yellow
     }
 
-    Write-Host "  Desinstalando Lens..." -ForegroundColor $Yellow
-    & $piExecutable remove npm:pi-lens >$null 2>$null
+    Write-Host "  Desinstalando Lean Context..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-lean-ctx >$null 2>$null
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "  ✓ Lens desinstalado" -ForegroundColor $Green
+        Write-Host "  ✓ Lean Context desinstalado" -ForegroundColor $Green
     } else {
-        Write-Host "  ⚠ Lens no estaba instalado" -ForegroundColor $Yellow
+        Write-Host "  ⚠ Lean Context no estaba instalado" -ForegroundColor $Yellow
     }
+
+
 
     Write-Host "  Desinstalando Code Intelligence..." -ForegroundColor $Yellow
     & $piExecutable remove npm:@catdaemon/pi-code-intelligence >$null 2>$null
@@ -129,6 +131,7 @@ $pathsToRemove = @(
     (Join-Path $agentConfigDir "npm\node_modules\@catdaemon\pi-code-intelligence"),
     (Join-Path $agentConfigDir "npm\node_modules\pi-mcp-adapter"),
     (Join-Path $agentConfigDir "npm\node_modules\pi-subagents"),
+    (Join-Path $agentConfigDir "npm\node_modules\pi-lean-ctx"),
     (Join-Path $agentConfigDir "bin\eurecatagent"),
     (Join-Path $agentConfigDir "bin\eurecatagent.cmd"),
     (Join-Path $agentConfigDir "bin\pi"),

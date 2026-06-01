@@ -110,15 +110,7 @@ if errorlevel 1 (
 ) else (
     echo [OK] Paquete Code Intelligence instalado
 )
-echo [INFO] Instalando Lens...
-call "%PI_CMD%" install npm:pi-lens >nul 2>nul
-if errorlevel 1 (
-    echo [FAIL] Error al instalar Lens (pi-lens)
-    pause
-    exit /b 1
-) else (
-    echo [OK] Paquete Lens instalado
-)
+
 echo [INFO] Instalando Web Access...
 call "%PI_CMD%" install npm:pi-web-access >nul 2>nul
 if errorlevel 1 (
@@ -136,6 +128,31 @@ if errorlevel 1 (
     exit /b 1
 ) else (
     echo [OK] Paquete Ask User instalado
+)
+
+echo [INFO] Instalando Lean Context (pi-lean-ctx)...
+
+REM lean-ctx binary (Rust) — opcional, para compresión de tokens
+where cargo >nul 2>nul
+if not errorlevel 1 (
+    echo [INFO]   Instalando lean-ctx binary via cargo...
+    call cargo install lean-ctx >nul 2>nul
+    if not errorlevel 1 (
+        echo [OK] lean-ctx binary instalado
+    ) else (
+        echo [WARN] lean-ctx binary: falló la instalación con cargo (opcional)
+    )
+) else (
+    echo [WARN] lean-ctx binary: cargo no disponible. Instálalo manualmente con: cargo install lean-ctx
+)
+
+call "%PI_CMD%" install npm:pi-lean-ctx >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Lean Context (pi-lean-ctx)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Lean Context instalado
 )
 
 if not exist "%TEMPLATE_DIR%\pi.cmd" (

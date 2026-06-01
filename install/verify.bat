@@ -90,14 +90,7 @@ if %errorlevel% equ 0 (
         set /a checks_fail+=1
     )
 
-    pi list 2>nul | findstr /C:"pi-lens" >nul
-    if !errorlevel! equ 0 (
-        echo [OK] Lens: Instalado y activo
-        set /a checks_pass+=1
-    ) else (
-        echo [FAIL] Lens: No detectado en "pi list"
-        set /a checks_fail+=1
-    )
+
 
     pi list 2>nul | findstr /C:"pi-web-access" >nul
     if !errorlevel! equ 0 (
@@ -115,6 +108,24 @@ if %errorlevel% equ 0 (
     ) else (
         echo [FAIL] Ask User: No detectado en "pi list"
         set /a checks_fail+=1
+    )
+
+    pi list 2>nul | findstr /C:"pi-lean-ctx" >nul
+    if !errorlevel! equ 0 (
+        echo [OK] Lean Context: Instalado y activo
+        set /a checks_pass+=1
+    ) else (
+        echo [FAIL] Lean Context: No detectado en "pi list"
+        set /a checks_fail+=1
+    )
+
+    where lean-ctx >nul 2>nul
+    if !errorlevel! equ 0 (
+        for /f "tokens=*" %%v in ('lean-ctx --version 2^>nul') do set leanctx_ver=%%v
+        echo [OK] lean-ctx binary: !leanctx_ver!
+        set /a checks_pass+=1
+    ) else (
+        echo [WARN] lean-ctx binary: No instalado (opcional — instala con: cargo install lean-ctx)
     )
 
     if exist "!AGENT_CONFIG_DIR!\mcp.json" (

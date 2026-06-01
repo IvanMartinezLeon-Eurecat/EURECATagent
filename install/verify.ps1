@@ -82,13 +82,7 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
         $global:checksFail++
     }
 
-    if ($piPackages -match "pi-lens") {
-        Write-Host "✓ Lens : Instalado y activo" -ForegroundColor $Green
-        $global:checksPass++
-    } else {
-        Write-Host "✗ Lens : No detectado en 'pi list'" -ForegroundColor $Red
-        $global:checksFail++
-    }
+
 
     if ($piPackages -match "pi-web-access") {
         Write-Host "✓ Web Access : Instalado y activo" -ForegroundColor $Green
@@ -104,6 +98,21 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
     } else {
         Write-Host "✗ Ask User : No detectado en 'pi list'" -ForegroundColor $Red
         $global:checksFail++
+    }
+
+    if ($piPackages -match "pi-lean-ctx") {
+        Write-Host "✓ Lean Context : Instalado y activo" -ForegroundColor $Green
+        $global:checksPass++
+    } else {
+        Write-Host "✗ Lean Context : No detectado en 'pi list'" -ForegroundColor $Red
+        $global:checksFail++
+    }
+
+    if (Get-Command lean-ctx -ErrorAction SilentlyContinue) {
+        Write-Host "✓ lean-ctx binary : $(& lean-ctx --version 2>&1)" -ForegroundColor $Green
+        $global:checksPass++
+    } else {
+        Write-Host "⚠ lean-ctx binary : No instalado (opcional — instala con: cargo install lean-ctx)" -ForegroundColor $Yellow
     }
 
     $agentMcpConfig = Join-Path $agentConfigDir "mcp.json"
