@@ -18,15 +18,23 @@ jobs:
       - name: Build release tarball
         run: bash scripts/build-release.sh "${GITHUB_REF_NAME}"
 
-      - name: Create GitHub Release
+      - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" \
-            dist/eurecatagent-"${GITHUB_REF_NAME}".tar.gz \
-            dist/eurecatagent.tar.gz \
-            install/install.sh \
-            install/install.ps1 \
-            install/install.bat \
-            --title "${GITHUB_REF_NAME}" \
-            --generate-notes
+          assets=(
+            dist/eurecatagent-"${GITHUB_REF_NAME}".tar.gz
+            dist/eurecatagent.tar.gz
+            install/install.sh
+            install/install.ps1
+            install/install.bat
+          )
+
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" "${assets[@]}" --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" \
+              "${assets[@]}" \
+              --title "${GITHUB_REF_NAME}" \
+              --generate-notes
+          fi
