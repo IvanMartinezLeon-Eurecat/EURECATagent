@@ -7,9 +7,7 @@ $checksPass = 0
 $checksFail = 0
 
 Write-Host ""
-Write-Host "╔════════════════════════════════════════╗" -ForegroundColor $Blue
-Write-Host "║  Verificación de EURECATagent         ║" -ForegroundColor $Blue
-Write-Host "╚════════════════════════════════════════╝" -ForegroundColor $Blue
+Write-Host "=== EURECATagent Verification ===" -ForegroundColor $Blue
 Write-Host ""
 
 function Check-Command {
@@ -61,26 +59,26 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
 
     $piPackages = pi list 2>$null
     if ($piPackages -match "pi-subagents") {
-        Write-Host "✓ pi-subagents : Instalado y activo" -ForegroundColor $Green
+        Write-Host "✓ Coding Agent : Instalado y activo" -ForegroundColor $Green
         $global:checksPass++
     } else {
-        Write-Host "✗ pi-subagents : No detectado en 'pi list'" -ForegroundColor $Red
+        Write-Host "✗ Coding Agent : No detectado en 'pi list'" -ForegroundColor $Red
         $global:checksFail++
     }
 
     if ($piPackages -match "pi-mcp-adapter") {
-        Write-Host "✓ pi-mcp-adapter : Instalado y activo" -ForegroundColor $Green
+        Write-Host "✓ MCP Adapter : Instalado y activo" -ForegroundColor $Green
         $global:checksPass++
     } else {
-        Write-Host "✗ pi-mcp-adapter : No detectado en 'pi list'" -ForegroundColor $Red
+        Write-Host "✗ MCP Adapter : No detectado en 'pi list'" -ForegroundColor $Red
         $global:checksFail++
     }
 
     if ($piPackages -match "@catdaemon/pi-code-intelligence") {
-        Write-Host "✓ pi-code-intelligence : Instalado y activo" -ForegroundColor $Green
+        Write-Host "✓ Code Intelligence : Instalado y activo" -ForegroundColor $Green
         $global:checksPass++
     } else {
-        Write-Host "✗ pi-code-intelligence : No detectado en 'pi list'" -ForegroundColor $Red
+        Write-Host "✗ Code Intelligence : No detectado en 'pi list'" -ForegroundColor $Red
         $global:checksFail++
     }
 
@@ -135,27 +133,11 @@ if (Get-Command pi -ErrorAction SilentlyContinue) {
 }
 
 Write-Host ""
-Write-Host "== Resumen ==" -ForegroundColor $Blue
+Write-Host "== Summary ==" -ForegroundColor $Blue
 Write-Host ""
 if ($checksFail -eq 0) {
-    Write-Host "✓ Todas las verificaciones pasaron" -ForegroundColor $Green
-    Write-Host ""
-    Write-Host "Próximos pasos:" -ForegroundColor $Blue
-    Write-Host "1. cd /ruta/a/tu/proyecto"
-    Write-Host "2. pi"
-    Write-Host "3. /router-status"
-    Write-Host "4. /code-intelligence-doctor"
-    Write-Host "5. /enable-code-intelligence"
-    Write-Host "6. /mcp"
+    Write-Host "✓ All checks passed" -ForegroundColor $Green
 } else {
-    Write-Host "✗ $checksFail verificación(es) fallaron" -ForegroundColor $Red
-    Write-Host ""
-    Write-Host "Por favor:" -ForegroundColor $Yellow
-    Write-Host "1. Ejecuta .\install.ps1"
-    Write-Host "2. Cierra y reabre tu terminal"
+    Write-Host "✗ $checksFail check(s) failed — run install.ps1 first" -ForegroundColor $Red
 }
-
-Write-Host ""
-Write-Host "Documentación: https://pi.dev/docs/latest" -ForegroundColor $Blue
-Write-Host "pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence" -ForegroundColor $Blue
 Write-Host ""

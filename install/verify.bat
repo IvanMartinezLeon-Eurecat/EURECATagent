@@ -6,9 +6,7 @@ set checks_pass=0
 set checks_fail=0
 
 echo.
-echo ╔════════════════════════════════════════╗
-echo ║  Verificación de EURECATagent         ║
-echo ╚════════════════════════════════════════╝
+echo === EURECATagent Verification ===
 echo.
 
 echo == Verificaciones del Sistema ==
@@ -67,28 +65,28 @@ if %errorlevel% equ 0 (
 
     pi list 2>nul | findstr /C:"pi-subagents" >nul
     if !errorlevel! equ 0 (
-        echo [OK] pi-subagents: Instalado y activo
+        echo [OK] Coding Agent: Instalado y activo
         set /a checks_pass+=1
     ) else (
-        echo [FAIL] pi-subagents: No detectado en "pi list"
+        echo [FAIL] Coding Agent: No detectado en "pi list"
         set /a checks_fail+=1
     )
 
     pi list 2>nul | findstr /C:"pi-mcp-adapter" >nul
     if !errorlevel! equ 0 (
-        echo [OK] pi-mcp-adapter: Instalado y activo
+        echo [OK] MCP Adapter: Instalado y activo
         set /a checks_pass+=1
     ) else (
-        echo [FAIL] pi-mcp-adapter: No detectado en "pi list"
+        echo [FAIL] MCP Adapter: No detectado en "pi list"
         set /a checks_fail+=1
     )
 
     pi list 2>nul | findstr /C:"@catdaemon/pi-code-intelligence" >nul
     if !errorlevel! equ 0 (
-        echo [OK] pi-code-intelligence: Instalado y activo
+        echo [OK] Code Intelligence: Instalado y activo
         set /a checks_pass+=1
     ) else (
-        echo [FAIL] pi-code-intelligence: No detectado en "pi list"
+        echo [FAIL] Code Intelligence: No detectado en "pi list"
         set /a checks_fail+=1
     )
 
@@ -140,28 +138,12 @@ if %errorlevel% equ 0 (
 )
 
 echo.
-echo == Resumen ==
+echo == Summary ==
 echo.
 if !checks_fail! equ 0 (
-    echo [OK] Todas las verificaciones pasaron
-    echo.
-    echo Próximos pasos:
-    echo 1. cd /ruta/a/tu/proyecto
-    echo 2. pi
-    echo 3. /router-status
-    echo 4. /code-intelligence-doctor
-    echo 5. /enable-code-intelligence
-    echo 6. /mcp
+    echo [OK] All checks passed
 ) else (
-    echo [FAIL] !checks_fail! verificación^(es^) fallaron
-    echo.
-    echo Por favor:
-    echo 1. Ejecuta install.bat
-    echo 2. Cierra y reabre tu terminal
+    echo [FAIL] !checks_fail! check(s) failed — run install.bat first
 )
-
-echo.
-echo Documentación: https://pi.dev/docs/latest
-echo pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence
 echo.
 pause

@@ -10,10 +10,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo -e "${BLUE}╔════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║  EURECATagent                          ║${NC}"
-echo -e "${BLUE}║  Instalador para Linux/macOS           ║${NC}"
-echo -e "${BLUE}╚════════════════════════════════════════╝${NC}"
+echo -e "${BLUE}=== EURECATagent Installer (Linux/macOS) ===${NC}"
 echo ""
 
 if ! command -v node &> /dev/null; then
@@ -79,10 +76,49 @@ resolve_real_pi_bin() {
     return 1
 }
 
-echo -e "${YELLOW}Instalando EURECATagent...${NC}"
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+check_pi_package() {
+    local pkg="$1"
+    local label="$2"
+    local list_output
+    list_output="$(\"${PI_BIN}\" list 2>/dev/null || true)"
+    if echo "${list_output}" | grep -q "${pkg}"; then
+        echo -e "${GREEN}✓ ${label}${NC}: Instalado y activo"
+        return 0
+    else
+        echo -e "${RED}✗ ${label}${NC}: No detectado en 'pi list'"
+        return 1
+    fi
+}
 
-echo -e "${YELLOW}Copiando la configuración de EURECATagent a ${AGENT_CONFIG_DIR}...${NC}"
+verify_subagent_config() {
+    local required=(
+        "generic-context-builder.md"
+        "generic-planner.md"
+        "generic-worker.md"
+        "generic-reviewer.md"
+        "generic-parallel-review.md"
+    )
+    local missing=0
+    for f in "${required[@]}"; do
+        if [ ! -f "${AGENT_CONFIG_DIR}/agents/${f}" ]; then
+            ((missing++))
+        fi
+    done
+    if [ ${missing} -eq 0 ]; then
+        echo -e "${GREEN}✓ Subagentes genéricos${NC}: Configuración copiada correctamente"
+    else
+        echo -e "${RED}✗ Subagentes genéricos${NC}: Faltan ${missing} archivo(s) — la configuración no se copió completamente"
+        return 1
+    fi
+}
+
+echo -e "${YELLOW}Instalando EURECATagent...${NC}"
+if ! npm install -g --loglevel=error --ignore-scripts @earendil-works/pi-coding-agent > /dev/null 2>&1; then
+    echo -e "${RED}✗ Error: No se pudo instalar @earendil-works/pi-coding-agent${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}Copiando la configuración de EURECATagent...${NC}"
 if [ ! -d "${CONFIG_SOURCE_DIR}" ]; then
     echo -e "${RED}✗ Error: No se encontró la carpeta de configuración en ${CONFIG_SOURCE_DIR}${NC}"
     exit 1
@@ -90,7 +126,8 @@ fi
 
 mkdir -p "${AGENT_CONFIG_DIR}"
 cp -R "${CONFIG_SOURCE_DIR}/." "${AGENT_CONFIG_DIR}/"
-echo -e "${GREEN}✓ Configuración copiada en ${AGENT_CONFIG_DIR}${NC}"
+echo -e "${GREEN}✓ Configuración copiada ${NC}"
+verify_subagent_config
 
 echo -e "${YELLOW}Instalando y activando paquetes...${NC}"
 PI_BIN="$(resolve_real_pi_bin || true)"
@@ -100,9 +137,29 @@ if [ -z "${PI_BIN}" ]; then
     exit 1
 fi
 
-"${PI_BIN}" install npm:pi-subagents
-"${PI_BIN}" install npm:pi-mcp-adapter
-"${PI_BIN}" install npm:@catdaemon/pi-code-intelligence
+echo -e "${YELLOW}Instalando Coding Agent...${NC}"
+if "${PI_BIN}" install npm:pi-subagents > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete Coding Agent instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar Coding Agent (pi-subagents)${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}Instalando MCP Adapter...${NC}"
+if "${PI_BIN}" install npm:pi-mcp-adapter > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete MCP Adapter instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar MCP Adapter (pi-mcp-adapter)${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}Instalando Code Intelligence...${NC}"
+if "${PI_BIN}" install npm:@catdaemon/pi-code-intelligence > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ Paquete Code Intelligence instalado${NC}"
+else
+    echo -e "${RED}✗ Error al instalar Code Intelligence (@catdaemon/pi-code-intelligence)${NC}"
+    exit 1
+fi
 
 if [ ! -f "${TEMPLATE_DIR}/pi-unix-wrapper.sh" ]; then
     echo -e "${RED}✗ Error: No se encontró la plantilla del wrapper en ${TEMPLATE_DIR}/pi-unix-wrapper.sh${NC}"
@@ -124,41 +181,22 @@ append_path_block "${HOME}/.bashrc"
 append_path_block "${HOME}/.zshrc"
 export PATH="${AGENT_BIN_DIR}:$PATH"
 
-echo -e "${GREEN}✓ pi-subagents instalado y activo${NC}"
-echo -e "${GREEN}✓ pi-mcp-adapter instalado y activo${NC}"
-echo -e "${GREEN}✓ @catdaemon/pi-code-intelligence instalado y activo${NC}"
-echo -e "${GREEN}✓ EURECATagent instalado en ${WRAPPER_PATH}${NC}"
+echo -e "${GREEN}[OK] EURECATagent installed at ${WRAPPER_PATH}${NC}"
 
-echo ""
-echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  EURECATagent instalado correctamente  ║${NC}"
-echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
 echo ""
 
 if command -v pi &> /dev/null; then
-    echo -e "${GREEN}✓ EURECATagent ya está disponible en tu PATH${NC}"
+    echo -e "${GREEN}[OK] EURECATagent is available in your PATH${NC}"
 else
-    echo -e "${YELLOW}⚠ El comando EURECATagent no está disponible todavía en tu PATH.${NC}"
-    echo -e "${YELLOW}Prueba a reiniciar tu terminal o ejecutar: source ~/.bashrc${NC}"
+    echo -e "${YELLOW}[WARN] Restart your terminal or run: source ~/.bashrc${NC}"
 fi
 
 echo ""
-echo -e "${BLUE}Próximos pasos:${NC}"
-echo "1. Validación opcional: bash verify.sh"
-echo "2. Ve a tu directorio de proyecto: cd /path/to/your/project"
-echo "3. Inicia EURECATagent: eurecatagent"
-echo "4. EURECATagent almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
-echo "5. Autentícate con: /login (para proveedores con suscripción)"
-echo "6. O configura tu API key: export ANTHROPIC_API_KEY=your-key"
-echo "7. Comprueba el router: /router-status"
-echo "8. Prepara la inteligencia local: /code-intelligence-doctor"
-echo "9. Actívala en el repo: /enable-code-intelligence"
-echo "10. Comprueba MCP: /mcp"
-echo "11. Para descubrimiento estructural usa: code_intelligence_search"
+echo -e "${BLUE}Next steps:${NC}"
+echo "  1. cd /your/project  &&  eurecatagent"
+echo "  2. /login  or  export ANTHROPIC_API_KEY=your-key"
+echo "  3. /code-intelligence-doctor  &&  /enable-code-intelligence"
+echo "  4. Docs: https://pi.dev/docs/latest"
 echo ""
-echo -e "${BLUE}Configuración instalada:${NC} ${AGENT_CONFIG_DIR}"
-echo -e "${BLUE}Documentación: https://pi.dev/docs/latest${NC}"
-echo -e "${BLUE}pi-subagents: https://pi.dev/packages/pi-subagents${NC}"
-echo -e "${BLUE}pi-mcp-adapter: https://pi.dev/packages/pi-mcp-adapter${NC}"
-echo -e "${BLUE}pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence${NC}"
+echo -e "${BLUE}Config installed:${NC} ${AGENT_CONFIG_DIR}"
 echo ""

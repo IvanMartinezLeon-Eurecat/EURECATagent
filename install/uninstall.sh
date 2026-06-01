@@ -12,10 +12,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}╔════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║  EURECAT agent                        ║${NC}"
-echo -e "${BLUE}║  Uninstallation Script                 ║${NC}"
-echo -e "${BLUE}╚════════════════════════════════════════╝${NC}"
+echo -e "${BLUE}=== EURECATagent Uninstaller (Linux/macOS) ===${NC}"
 echo ""
 
 # Check if npm is installed
@@ -34,9 +31,6 @@ fi
 
 AGENT_CONFIG_DIR="${HOME}/.pi/agent"
 
-echo ""
-echo -e "${YELLOW}Removing EURECAT packages...${NC}"
-
 PI_BIN=""
 if command -v pi &> /dev/null; then
     PI_BIN="$(command -v pi)"
@@ -47,10 +41,73 @@ else
     fi
 fi
 
+check_pi_package_presence() {
+    local pkg="$1"
+    local label="$2"
+    if [ -n "${PI_BIN}" ]; then
+        local list_output
+        list_output="$(\"${PI_BIN}\" list 2>/dev/null || true)"
+        if echo "${list_output}" | grep -q "${pkg}" 2>/dev/null; then
+            echo -e "  ${GREEN}✓${NC} ${label}"
+            return 0
+        fi
+    fi
+    echo -e "  ${YELLOW}⚠${NC} ${label}: No instalado"
+    return 0
+}
+
+check_config_presence() {
+    local file="$1"
+    local label="$2"
+    if [ -f "${AGENT_CONFIG_DIR}/${file}" ] || [ -d "${AGENT_CONFIG_DIR}/${file}" ]; then
+        echo -e "  ${GREEN}✓${NC} ${label}"
+    else
+        echo -e "  ${YELLOW}⚠${NC} ${label}: No encontrado"
+    fi
+    return 0
+}
+
+echo ""
+echo -e "${YELLOW}Checking installed packages...${NC}"
+check_pi_package_presence "@catdaemon/pi-code-intelligence" "Code Intelligence"
+check_pi_package_presence "pi-mcp-adapter" "MCP Adapter"
+check_pi_package_presence "pi-subagents" "Coding Agent"
+
+echo ""
+echo -e "${YELLOW}Checking subagent config...${NC}"
+check_config_presence "agents/generic-context-builder.md" "generic-context-builder"
+check_config_presence "agents/generic-planner.md" "generic-planner"
+check_config_presence "agents/generic-worker.md" "generic-worker"
+check_config_presence "agents/generic-reviewer.md" "generic-reviewer"
+check_config_presence "agents/generic-parallel-review.md" "generic-parallel-review"
+check_config_presence "chains/generic-discovery.chain.md" "generic-discovery chain"
+check_config_presence "chains/generic-implement-safe.chain.md" "generic-implement-safe chain"
+check_config_presence "chains/generic-research-and-plan.chain.md" "generic-research-and-plan chain"
+
+echo ""
+echo -e "${YELLOW}Removing EURECAT packages...${NC}"
+
 if [ -n "${PI_BIN}" ]; then
-    "${PI_BIN}" remove npm:@catdaemon/pi-code-intelligence || true
-    "${PI_BIN}" remove npm:pi-mcp-adapter || true
-    "${PI_BIN}" remove npm:pi-subagents || true
+    echo -e "${YELLOW}  Desinstalando Code Intelligence...${NC}"
+    if "${PI_BIN}" remove npm:@catdaemon/pi-code-intelligence > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Code Intelligence desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ Code Intelligence no estaba instalado${NC}"
+    fi
+
+    echo -e "${YELLOW}  Desinstalando MCP Adapter...${NC}"
+    if "${PI_BIN}" remove npm:pi-mcp-adapter > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ MCP Adapter desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ MCP Adapter no estaba instalado${NC}"
+    fi
+
+    echo -e "${YELLOW}  Desinstalando Coding Agent...${NC}"
+    if "${PI_BIN}" remove npm:pi-subagents > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Coding Agent desinstalado${NC}"
+    else
+        echo -e "${YELLOW}  ⚠ Coding Agent no estaba instalado${NC}"
+    fi
 fi
 
 echo -e "${YELLOW}Uninstalling EURECATagent...${NC}"
@@ -106,16 +163,19 @@ rmdir "${AGENT_CONFIG_DIR}" 2>/dev/null || true
 rmdir "${HOME}/.pi" 2>/dev/null || true
 
 echo ""
-echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  EURECATagent uninstalled successfully!║${NC}"
-echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+echo -e "${YELLOW}Verifying removal...${NC}"
+if command -v pi &> /dev/null; then
+    echo -e "  ${RED}✗${NC} pi sigue disponible en el PATH"
+else
+    echo -e "  ${GREEN}✓${NC} pi eliminado del PATH"
+fi
+if [ -d "${AGENT_CONFIG_DIR}" ]; then
+    echo -e "  ${YELLOW}⚠${NC} ${AGENT_CONFIG_DIR} aún existe (pueden quedar residuos)"
+else
+    echo -e "  ${GREEN}✓${NC} Configuración eliminada de ${AGENT_CONFIG_DIR}"
+fi
 echo ""
-echo -e "${GREEN}✓ EURECAT configuration removed from ${AGENT_CONFIG_DIR}${NC}"
+echo -e "${GREEN}[OK] EURECATagent uninstalled${NC}"
 echo ""
-
-# Check alternative package managers
-echo -e "${YELLOW}If you installed EURECATagent with a different package manager:${NC}"
-echo "  - pnpm: pnpm remove -g @earendil-works/pi-coding-agent"
-echo "  - Yarn: yarn global remove @earendil-works/pi-coding-agent"
-echo "  - Bun:  bun uninstall -g @earendil-works/pi-coding-agent"
+echo -e "${YELLOW}Other package managers: pnpm remove -g @earendil-works/pi-coding-agent / yarn global remove ... / bun uninstall -g ...${NC}"
 echo ""

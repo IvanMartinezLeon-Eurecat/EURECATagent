@@ -8,9 +8,7 @@ $Blue = [System.ConsoleColor]::Blue
 function Write-Header {
     param([string]$Message)
     Write-Host ""
-    Write-Host "╔════════════════════════════════════════╗" -ForegroundColor $Blue
-    Write-Host "║  $($Message.PadRight(38))              ║" -ForegroundColor $Blue
-    Write-Host "╚════════════════════════════════════════╝" -ForegroundColor $Blue
+    Write-Host "=== $Message ===" -ForegroundColor $Blue
     Write-Host ""
 }
 
@@ -34,8 +32,7 @@ function Write-Info {
     Write-Host $Message -ForegroundColor $Blue
 }
 
-Write-Header "Instalador de EURECATagent"
-Write-Info "Instalador para Windows PowerShell"
+Write-Header "EURECATagent Installer (Windows PowerShell)"
 Write-Host ""
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
@@ -102,7 +99,7 @@ function Ensure-AgentBinOnUserPath {
 
 Write-Info "Instalando EURECATagent..."
 Write-Host ""
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+npm install -g --loglevel=error --ignore-scripts @earendil-works/pi-coding-agent
 if ($LASTEXITCODE -ne 0) {
     Write-Error-Custom "Pi installation failed."
     exit $LASTEXITCODE
@@ -126,12 +123,32 @@ if (-not $piExecutable) {
     exit 1
 }
 
-& $piExecutable install npm:pi-subagents
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-& $piExecutable install npm:pi-mcp-adapter
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-& $piExecutable install npm:@catdaemon/pi-code-intelligence
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+Write-Info "Instalando Coding Agent..."
+& $piExecutable install npm:pi-subagents >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete Coding Agent instalado"
+} else {
+    Write-Error-Custom "Error al instalar Coding Agent (pi-subagents)"
+    exit $LASTEXITCODE
+}
+
+Write-Info "Instalando MCP Adapter..."
+& $piExecutable install npm:pi-mcp-adapter >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete MCP Adapter instalado"
+} else {
+    Write-Error-Custom "Error al instalar MCP Adapter (pi-mcp-adapter)"
+    exit $LASTEXITCODE
+}
+
+Write-Info "Instalando Code Intelligence..."
+& $piExecutable install npm:@catdaemon/pi-code-intelligence >$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "Paquete Code Intelligence instalado"
+} else {
+    Write-Error-Custom "Error al instalar Code Intelligence (@catdaemon/pi-code-intelligence)"
+    exit $LASTEXITCODE
+}
 
 $wrapperTemplatePath = Join-Path $templateDir "pi.cmd"
 if (-not (Test-Path $wrapperTemplatePath)) {
@@ -156,39 +173,24 @@ if (Test-Path $eureWrapperTemplatePath) {
 Ensure-AgentBinOnUserPath -AgentBinDir $agentBinDir
 $env:Path = "$agentBinDir;$env:Path"
 
-Write-Success "pi-subagents instalado y activo"
-Write-Success "pi-mcp-adapter instalado y activo"
-Write-Success "@catdaemon/pi-code-intelligence instalado y activo"
-Write-Success "EURECATagent instalado en $wrapperPath"
+Write-Success "EURECATagent installed at $wrapperPath"
 
 Write-Host ""
-Write-Header "EURECATagent instalado correctamente"
+Write-Header "EURECATagent installed successfully"
 Write-Host ""
 
 if (Get-Command pi -ErrorAction SilentlyContinue) {
-    Write-Success "EURECATagent ya está disponible en tu PATH"
+    Write-Success "EURECATagent is available in your PATH"
 } else {
-    Write-Warning-Custom "El comando EURECATagent no está disponible todavía en tu PATH."
-    Write-Info "Cierra y vuelve a abrir PowerShell o Command Prompt para refrescar tu PATH."
+    Write-Warning-Custom "Restart your terminal to refresh PATH."
 }
 
 Write-Host ""
-Write-Info "Próximos pasos:"
-Write-Host "1. Validación opcional: .\verify.ps1"
-Write-Host "2. Ve a tu directorio de proyecto: cd C:\path\to\your\project"
-Write-Host "3. Inicia EURECATagent: eurecatagent"
-Write-Host "4. EURECATagent almacenará la memoria de Code Intelligence en <project>/.eurecat-data"
-Write-Host "5. Autentícate con: /login"
-Write-Host "6. O configura tu API key: `$env:ANTHROPIC_API_KEY='your-key'"
-Write-Host "7. Comprueba el router: /router-status"
-Write-Host "8. Prepara la inteligencia local: /code-intelligence-doctor"
-Write-Host "9. Actívala en el repo: /enable-code-intelligence"
-Write-Host "10. Comprueba MCP: /mcp"
-Write-Host "11. Para descubrimiento estructural usa: code_intelligence_search"
+Write-Info "Next steps:"
+Write-Host "  1. Start: cd /your/project  &&  eurecatagent"
+Write-Host "  2. Auth:  /login  or  `$env:ANTHROPIC_API_KEY='your-key'"
+Write-Host "  3. Repo:  /code-intelligence-doctor  &&  /enable-code-intelligence"
+Write-Host "  4. Docs:  https://pi.dev/docs/latest"
 Write-Host ""
-Write-Info "Configuración instalada: $agentConfigDir"
-Write-Info "Documentación: https://pi.dev/docs/latest"
-Write-Info "pi-subagents: https://pi.dev/packages/pi-subagents"
-Write-Info "pi-mcp-adapter: https://pi.dev/packages/pi-mcp-adapter"
-Write-Info "pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence"
+Write-Info "Config: $agentConfigDir"
 Write-Host ""

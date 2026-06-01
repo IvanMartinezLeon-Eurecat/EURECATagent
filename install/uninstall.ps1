@@ -5,17 +5,9 @@ $Green = [System.ConsoleColor]::Green
 $Red = [System.ConsoleColor]::Red
 $Yellow = [System.ConsoleColor]::Yellow
 
-function Write-Header {
-    param([string]$Message)
-    Write-Host ""
-    Write-Host "╔════════════════════════════════════════╗" -ForegroundColor $Blue
-    Write-Host "║  $($Message.PadRight(38))              ║" -ForegroundColor $Blue
-    Write-Host "╚════════════════════════════════════════╝" -ForegroundColor $Blue
-    Write-Host ""
-}
-
-# Header
-Write-Header "EURECAT agent Uninstaller"
+Write-Host ""
+Write-Host "=== EURECATagent Uninstaller (Windows PowerShell) ===" -ForegroundColor $Blue
+Write-Host ""
 
 $agentConfigDir = Join-Path $HOME ".pi\agent"
 
@@ -45,9 +37,29 @@ if ($piCommand) {
 }
 
 if ($piExecutable) {
-    & $piExecutable remove npm:@catdaemon/pi-code-intelligence 2>$null
-    & $piExecutable remove npm:pi-mcp-adapter 2>$null
-    & $piExecutable remove npm:pi-subagents 2>$null
+    Write-Host "  Desinstalando Code Intelligence..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:@catdaemon/pi-code-intelligence >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ Code Intelligence desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ Code Intelligence no estaba instalado" -ForegroundColor $Yellow
+    }
+
+    Write-Host "  Desinstalando MCP Adapter..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-mcp-adapter >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ MCP Adapter desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ MCP Adapter no estaba instalado" -ForegroundColor $Yellow
+    }
+
+    Write-Host "  Desinstalando Coding Agent..." -ForegroundColor $Yellow
+    & $piExecutable remove npm:pi-subagents >$null 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  ✓ Coding Agent desinstalado" -ForegroundColor $Green
+    } else {
+        Write-Host "  ⚠ Coding Agent no estaba instalado" -ForegroundColor $Yellow
+    }
 }
 
 Write-Host "Uninstalling EURECATagent..." -ForegroundColor $Yellow
@@ -125,15 +137,10 @@ foreach ($dir in $dirsToCleanup) {
 }
 
 Write-Host ""
-Write-Header "EURECATagent uninstalled successfully!"
+Write-Host "[OK] EURECATagent uninstalled" -ForegroundColor $Green
+Write-Host "[OK] Configuration removed from $agentConfigDir" -ForegroundColor $Green
 Write-Host ""
-Write-Host "EURECAT configuration removed from $agentConfigDir" -ForegroundColor $Green
-Write-Host ""
-
-Write-Host "If you installed EURECATagent with a different package manager:" -ForegroundColor $Yellow
-Write-Host "  - pnpm: pnpm remove -g @earendil-works/pi-coding-agent"
-Write-Host "  - Yarn: yarn global remove @earendil-works/pi-coding-agent"
-Write-Host "  - Bun:  bun uninstall -g @earendil-works/pi-coding-agent"
+Write-Host "Other package managers: pnpm remove -g ... / yarn global remove ... / bun uninstall -g ..." -ForegroundColor $Yellow
 Write-Host ""
 
 Read-Host "Press Enter to close"

@@ -8,11 +8,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo -e "${BLUE}"
-echo "╔════════════════════════════════════════╗"
-echo "║  Verificación de EURECATagent         ║"
-echo "╚════════════════════════════════════════╝"
-echo -e "${NC}"
+echo -e "${BLUE}=== EURECATagent Verification ===${NC}"
 echo ""
 
 CHECKS_PASSED=0
@@ -65,26 +61,26 @@ if command -v pi &> /dev/null; then
 
     PI_LIST="$(pi list 2>/dev/null || true)"
     if echo "${PI_LIST}" | grep -q "pi-subagents"; then
-        echo -e "${GREEN}✓ pi-subagents${NC}: Instalado y activo"
+        echo -e "${GREEN}✓ Coding Agent${NC}: Instalado y activo"
         ((CHECKS_PASSED++))
     else
-        echo -e "${RED}✗ pi-subagents${NC}: No detectado en 'pi list'"
+        echo -e "${RED}✗ Coding Agent${NC}: No detectado en 'pi list'"
         ((CHECKS_FAILED++))
     fi
 
     if echo "${PI_LIST}" | grep -q "pi-mcp-adapter"; then
-        echo -e "${GREEN}✓ pi-mcp-adapter${NC}: Instalado y activo"
+        echo -e "${GREEN}✓ MCP Adapter${NC}: Instalado y activo"
         ((CHECKS_PASSED++))
     else
-        echo -e "${RED}✗ pi-mcp-adapter${NC}: No detectado en 'pi list'"
+        echo -e "${RED}✗ MCP Adapter${NC}: No detectado en 'pi list'"
         ((CHECKS_FAILED++))
     fi
 
     if echo "${PI_LIST}" | grep -q "@catdaemon/pi-code-intelligence"; then
-        echo -e "${GREEN}✓ pi-code-intelligence${NC}: Instalado y activo"
+        echo -e "${GREEN}✓ Code Intelligence${NC}: Instalado y activo"
         ((CHECKS_PASSED++))
     else
-        echo -e "${RED}✗ pi-code-intelligence${NC}: No detectado en 'pi list'"
+        echo -e "${RED}✗ Code Intelligence${NC}: No detectado en 'pi list'"
         ((CHECKS_FAILED++))
     fi
 
@@ -147,27 +143,11 @@ else
 fi
 
 echo ""
-echo -e "${BLUE}== Resumen ==${NC}"
+echo -e "${BLUE}== Summary ==${NC}"
 echo ""
 if [ $CHECKS_FAILED -eq 0 ]; then
-    echo -e "${GREEN}✓ Todas las verificaciones pasaron${NC}"
-    echo ""
-    echo -e "${BLUE}Próximos pasos:${NC}"
-    echo "1. cd /ruta/a/tu/proyecto"
-    echo "2. pi"
-    echo "3. /router-status"
-    echo "4. /code-intelligence-doctor"
-    echo "5. /enable-code-intelligence"
-    echo "6. /mcp"
+    echo -e "${GREEN}✓ All checks passed${NC}"
 else
-    echo -e "${RED}✗ ${CHECKS_FAILED} verificación(es) fallaron${NC}"
-    echo ""
-    echo -e "${YELLOW}Por favor:${NC}"
-    echo "1. Ejecuta bash install.sh"
-    echo "2. Cierra y reabre tu terminal"
+    echo -e "${RED}✗ ${CHECKS_FAILED} check(s) failed — run install.sh first${NC}"
 fi
-
-echo ""
-echo -e "${BLUE}Documentación: https://pi.dev/docs/latest${NC}"
-echo -e "${BLUE}pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence${NC}"
 echo ""

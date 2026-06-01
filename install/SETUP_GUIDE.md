@@ -29,7 +29,7 @@ Usa este documento si necesitas alguna de estas tareas:
 - instalar el stack en una máquina nueva
 - entender qué valida realmente `verify.*`
 - diagnosticar por qué `eurecatagent` no aparece en PATH
-- revisar por qué falta `pi-code-intelligence` o `context-mode`
+- revisar por qué falta `code intelligence` o `context-mode`
 - confirmar si el router híbrido está funcionando correctamente
 
 Si solo quieres empezar rápido, usa `install/README.md`.
@@ -87,9 +87,9 @@ install.bat
 1. instala `@earendil-works/pi-coding-agent`
 2. copia `config/agent/*` a `~/.pi/agent`
 3. instala:
-   - `pi-subagents`
-   - `pi-mcp-adapter`
-   - `@catdaemon/pi-code-intelligence`
+   - subagentes
+   - adaptador MCP
+   - code intelligence
 4. configura `context-mode`
 5. deja disponible la extensión `ai-router`
 6. crea o actualiza el comando `eurecatagent` (y `pi` como alias)
@@ -98,14 +98,9 @@ install.bat
 
 ## Instalación manual y límites
 
-La instalación manual mínima es:
+> ⚠ No recomendada. Prefiere el instalador automático (un solo comando curl/iwr).
 
-```bash
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-pi install npm:pi-subagents
-pi install npm:pi-mcp-adapter
-pi install npm:@catdaemon/pi-code-intelligence
-```
+La instalación manual mínima instala los paquetes base (agente principal, subagentes, adaptador MCP y code intelligence). Ejecuta los comandos equivalentes que aparecen en los scripts de `install/`.
 
 ### Limitación importante
 
@@ -144,9 +139,9 @@ pi list
 ```
 
 Debe aparecer al menos:
-- `pi-subagents`
-- `pi-mcp-adapter`
-- `@catdaemon/pi-code-intelligence`
+- `subagentes`
+- `adaptador MCP`
+- `code intelligence`
 
 ### 3. Validación de configuración copiada
 
@@ -219,7 +214,7 @@ Una vez instalado, entra en cualquier repositorio y ejecuta:
 Confirma si el entorno detecta:
 - tipo de repositorio
 - `code-intelligence`
-- `pi-subagents`
+- `subagentes`
 - `context-mode`
 - política de routing activa
 
@@ -269,7 +264,7 @@ which pi
 
 Si sigue fallando, reejecuta `bash install.sh`.
 
-### `pi list` no muestra `@catdaemon/pi-code-intelligence`
+### `pi list` no muestra `code intelligence`
 
 Causa probable:
 - instalación incompleta

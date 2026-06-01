@@ -4,10 +4,7 @@ REM EURECAT agent Uninstaller for Windows (Batch)
 setlocal enabledelayedexpansion
 
 echo.
-echo ╔════════════════════════════════════════╗
-echo ║  EURECAT agent                         ║
-echo ║  Uninstallation Script                 ║
-echo ╚════════════════════════════════════════╝
+echo === EURECATagent Uninstaller (Windows CMD) ===
 echo.
 
 set "AGENT_CONFIG_DIR=%USERPROFILE%\.pi\agent"
@@ -38,9 +35,27 @@ if exist "%NPM_GLOBAL_PREFIX%\pi.cmd" set "PI_CMD=%NPM_GLOBAL_PREFIX%\pi.cmd"
 
 :pi_remove_ready
 if defined PI_CMD (
+    echo [INFO] Desinstalando Code Intelligence...
     call "%PI_CMD%" remove npm:@catdaemon/pi-code-intelligence >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] Code Intelligence no estaba instalado
+    ) else (
+        echo [OK] Code Intelligence desinstalado
+    )
+    echo [INFO] Desinstalando MCP Adapter...
     call "%PI_CMD%" remove npm:pi-mcp-adapter >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] MCP Adapter no estaba instalado
+    ) else (
+        echo [OK] MCP Adapter desinstalado
+    )
+    echo [INFO] Desinstalando Coding Agent...
     call "%PI_CMD%" remove npm:pi-subagents >nul 2>nul
+    if errorlevel 1 (
+        echo [WARN] Coding Agent no estaba instalado
+    ) else (
+        echo [OK] Coding Agent desinstalado
+    )
 )
 
 echo.
@@ -101,17 +116,10 @@ if exist "%AGENT_CONFIG_DIR%\bin\pi.cmd" del /f /q "%AGENT_CONFIG_DIR%\bin\pi.cm
 2>nul rd "%USERPROFILE%\.pi"
 
 echo.
-echo ╔════════════════════════════════════════╗
-echo ║  EURECATagent uninstalled successfully!║
-echo ╚════════════════════════════════════════╝
+echo [OK] EURECATagent uninstalled
+echo [OK] Configuration removed from %AGENT_CONFIG_DIR%
 echo.
-echo [OK] EURECAT configuration removed from %AGENT_CONFIG_DIR%
-echo.
-
-echo If you installed EURECATagent with a different package manager:
-echo   - pnpm: pnpm remove -g @earendil-works/pi-coding-agent
-echo   - Yarn: yarn global remove @earendil-works/pi-coding-agent
-echo   - Bun:  bun uninstall -g @earendil-works/pi-coding-agent
+echo [WARN] Other package managers: pnpm remove -g ... / yarn global remove ... / bun uninstall -g ...
 echo.
 
 pause

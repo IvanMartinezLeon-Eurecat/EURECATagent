@@ -4,10 +4,7 @@ REM Instalador de EURECATagent para Windows CMD
 setlocal enabledelayedexpansion
 
 echo.
-echo ╔════════════════════════════════════════╗
-echo ║  EURECATagent                          ║
-echo ║  Instalador para Windows CMD           ║
-echo ╚════════════════════════════════════════╝
+echo === EURECATagent Installer (Windows CMD) ===
 echo.
 
 where node >nul 2>nul
@@ -42,7 +39,7 @@ set "WRAPPER_PATH=%AGENT_BIN_DIR%\pi.cmd"
 
 echo Instalando EURECATagent...
 echo.
-call npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+call npm install -g --loglevel=error --ignore-scripts @earendil-works/pi-coding-agent 
 if errorlevel 1 (
     echo [FAIL] EURECATagent installation failed
     pause
@@ -86,12 +83,33 @@ if not defined PI_CMD (
     exit /b 1
 )
 
-call "%PI_CMD%" install npm:pi-subagents
-if errorlevel 1 exit /b 1
-call "%PI_CMD%" install npm:pi-mcp-adapter
-if errorlevel 1 exit /b 1
-call "%PI_CMD%" install npm:@catdaemon/pi-code-intelligence
-if errorlevel 1 exit /b 1
+echo [INFO] Instalando Coding Agent...
+call "%PI_CMD%" install npm:pi-subagents >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Coding Agent (pi-subagents)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Coding Agent instalado
+)
+echo [INFO] Instalando MCP Adapter...
+call "%PI_CMD%" install npm:pi-mcp-adapter >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar MCP Adapter (pi-mcp-adapter)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete MCP Adapter instalado
+)
+echo [INFO] Instalando Code Intelligence...
+call "%PI_CMD%" install npm:@catdaemon/pi-code-intelligence >nul 2>nul
+if errorlevel 1 (
+    echo [FAIL] Error al instalar Code Intelligence (@catdaemon/pi-code-intelligence)
+    pause
+    exit /b 1
+) else (
+    echo [OK] Paquete Code Intelligence instalado
+)
 
 if not exist "%TEMPLATE_DIR%\pi.cmd" (
     echo [FAIL] No se encontró la plantilla del wrapper en %TEMPLATE_DIR%\pi.cmd
@@ -111,44 +129,25 @@ if exist "%TEMPLATE_DIR%\eurecatagent.cmd" (
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$dir = '%AGENT_BIN_DIR%'; $userPath = [Environment]::GetEnvironmentVariable('Path', 'User'); $parts = @(); if ($userPath) { $parts = $userPath.Split(';') | Where-Object { $_ -and $_.Trim() -ne '' } }; if (-not ($parts -contains $dir)) { [Environment]::SetEnvironmentVariable('Path', (($dir + ';' + ($parts -join ';')).Trim(';')), 'User') }"
 set "PATH=%AGENT_BIN_DIR%;%PATH%"
 
-echo [OK] pi-subagents instalado y activo
-echo [OK] pi-mcp-adapter instalado y activo
-echo [OK] @catdaemon/pi-code-intelligence instalado y activo
-echo [OK] EURECATagent instalado en %WRAPPER_PATH%
+echo [OK] EURECATagent installed at %WRAPPER_PATH%
 
-echo.
-echo ╔════════════════════════════════════════╗
-echo ║  EURECATagent instalado correctamente  ║
-echo ╚════════════════════════════════════════╝
 echo.
 
 where pi >nul 2>nul
 if %errorlevel% equ 0 (
-    echo [OK] EURECATagent ya está disponible en tu PATH
+    echo [OK] EURECATagent is available in your PATH
 ) else (
-    echo [WARN] El comando EURECATagent no está disponible todavía en tu PATH.
-    echo        Cierra y vuelve a abrir Command Prompt o PowerShell para refrescar tu PATH.
+    echo [WARN] Restart your terminal to refresh PATH.
 )
 
 echo.
-echo Próximos pasos:
-echo 1. Validación opcional: verify.bat
-echo 2. Ve a tu directorio de proyecto: cd C:\path\to\your\project
-echo 3. Inicia EURECATagent: eurecatagent
-echo 4. EURECATagent almacenará la memoria de Code Intelligence en ^<project^>\.eurecat-data
-echo 5. Autentícate con: /login
-echo 6. O configura tu API key: set ANTHROPIC_API_KEY=your-key
-echo 7. Comprueba el router: /router-status
-echo 8. Prepara la inteligencia local: /code-intelligence-doctor
-echo 9. Actívala en el repo: /enable-code-intelligence
-echo 10. Comprueba MCP: /mcp
-echo 11. Para descubrimiento estructural usa: code_intelligence_search
+echo Next steps:
+echo   1. Start: cd /your/project  ^&^&  eurecatagent
+echo   2. Auth:  /login  or  set ANTHROPIC_API_KEY=your-key
+echo   3. Repo:  /code-intelligence-doctor  ^&^&  /enable-code-intelligence
+echo   4. Docs:  https://pi.dev/docs/latest
 echo.
-echo Configuración instalada: %AGENT_CONFIG_DIR%
-echo Documentación: https://pi.dev/docs/latest
-echo pi-subagents: https://pi.dev/packages/pi-subagents
-echo pi-mcp-adapter: https://pi.dev/packages/pi-mcp-adapter
-echo pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence
+echo Config: %AGENT_CONFIG_DIR%
 echo.
 
 pause

@@ -3,7 +3,7 @@
 # EURECATagent – Cross-platform entry point
 # ==========================================
 # Uso:
-#   curl -fsSL https://eurecatagent.dev/install.sh | sh
+#   curl -fsSL https://eurecatagent.dev/install.sh | bash
 #
 # Compatibilidad:
 #   macOS / Linux / Windows (Git Bash / WSL)
@@ -27,10 +27,18 @@ case "${OS:-}" in
     echo "[EURECATagent] Windows nativo detectado." >&2
     echo "" >&2
     echo "  Para instalar en Windows PowerShell:" >&2
-    echo "    iwr -useb https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest/download/install.ps1 | iex" >&2
+    if [ "${VERSION}" = "latest" ]; then
+      echo "    iwr -useb https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest/download/install.ps1 | iex" >&2
+    else
+      echo "    iwr -useb https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${VERSION}/install.ps1 | iex" >&2
+    fi
     echo "" >&2
     echo "  Para instalar en Windows CMD:" >&2
-    echo "    curl -fsSL https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest/download/install.bat -o install.bat && install.bat" >&2
+    if [ "${VERSION}" = "latest" ]; then
+      echo "    curl -fsSL https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest/download/install.bat -o install.bat && install.bat" >&2
+    else
+      echo "    curl -fsSL https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${VERSION}/install.bat -o install.bat && install.bat" >&2
+    fi
     echo "" >&2
     exit 1
     ;;
@@ -41,7 +49,7 @@ esac
 # ──────────────────────────────────────────────
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd 2>/dev/null || pwd)"
 if [ -f "${SCRIPT_DIR}/install/install.sh" ]; then
-  echo "[EURECATagent] Ejecución local detectada. Usando instalador del repositorio." >&2
+  echo "[EURECATagent] Local install detected, using repo installer." >&2
   exec bash "${SCRIPT_DIR}/install/install.sh"
 fi
 

@@ -5,9 +5,9 @@ Guía principal para instalar **EURECATagent** desde este repositorio.
 Este directorio contiene los scripts y documentos necesarios para dejar preparado un entorno homogéneo de trabajo con:
 
 - **Pi** como agente base
-- **pi-subagents** para delegación y coordinación entre agentes
-- **pi-mcp-adapter** para integración MCP
-- **@catdaemon/pi-code-intelligence** para búsqueda semántica e impacto
+- **subagentes** para delegación y coordinación entre agentes
+- **adaptador MCP** para integración MCP
+- **code intelligence** para búsqueda semántica e impacto
 - **context-mode** para salidas grandes y contexto pesado
 - **ai-router** para routing híbrido según el tipo de tarea
 - subagentes y chains genéricas reutilizables entre proyectos
@@ -40,9 +40,9 @@ Los scripts de este directorio realizan estas acciones:
 1. Instalan `@earendil-works/pi-coding-agent` globalmente.
 2. Copian `config/agent/*` a `~/.pi/agent` o `%USERPROFILE%\.pi\agent`.
 3. Instalan y activan:
-   - `pi-subagents`
-   - `pi-mcp-adapter`
-   - `@catdaemon/pi-code-intelligence`
+   - subagentes
+   - adaptador MCP
+   - code intelligence
 4. Configuran `context-mode` en `mcp.json`.
 5. Dejan disponible la extensión `ai-router`.
 6. Preparan el comando `eurecatagent` (y `pi` como alias) orientado a contexto por proyecto.
@@ -159,20 +159,17 @@ install.bat
 
 ## Instalación manual mínima
 
-Si quieres instalar los paquetes base manualmente:
+> ⚠ No recomendada. Prefiere el instalador automático (un solo comando curl/iwr) que copia también toda la configuración EURECAT.
 
-```bash
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-pi install npm:pi-subagents
-pi install npm:pi-mcp-adapter
-pi install npm:@catdaemon/pi-code-intelligence
-```
+Si aún así necesitas instalar los paquetes base manualmente, ejecuta los comandos equivalentes que aparecen en los scripts de `install/`.
 
-> Importante: esta instalación manual cubre los paquetes, pero **no sustituye completamente** a los scripts de este repositorio, porque no copia por sí sola toda la configuración EURECAT. Si quieres dejar también `~/.pi/agent` alineado con este proyecto, usa el instalador automático.
+> Importante: la instalación manual cubre los paquetes, pero **no sustituye completamente** a los scripts de este repositorio, porque no copia por sí sola toda la configuración EURECAT. Si quieres dejar también `~/.pi/agent` alineado con este proyecto, usa el instalador automático.
 
 ---
 
 ## Primer arranque
+
+Una vez terminada la instalación:
 
 Una vez terminada la instalación:
 
@@ -203,7 +200,7 @@ Una vez arrancado:
 
 Esto te indica si el entorno detecta correctamente:
 - `code-intelligence`
-- `pi-subagents`
+- `subagentes`
 - `context-mode`
 - tipo de repositorio
 - política de routing activa
@@ -339,7 +336,7 @@ La idea no es sustituir las tools nativas, sino ordenar el flujo:
 
 ## Subagentes y chains genéricas incluidas
 
-Esta configuración instala `pi-subagents` y además copia una capa genérica reutilizable para cualquier proyecto en:
+Esta configuración instala subagentes y además copia una capa genérica reutilizable para cualquier proyecto en:
 
 - `~/.pi/agent/agents/`
 - `~/.pi/agent/chains/`
@@ -521,9 +518,9 @@ verify.bat
 Las verificaciones comprueban, entre otros puntos:
 
 - presencia de `node`, `npm` y `eurecatagent` / `pi`
-- instalación y activación de `pi-subagents`
-- instalación y activación de `pi-mcp-adapter`
-- instalación y activación de `@catdaemon/pi-code-intelligence`
+- instalación y activación de subagentes
+- instalación y activación del adaptador MCP
+- instalación y activación de code intelligence
 - presencia de `context-mode` en `~/.pi/agent/mcp.json`
 - disponibilidad de la extensión `ai-router`
 - presencia de los subagentes genéricos instalados en `~/.pi/agent/agents`
@@ -540,10 +537,10 @@ Las verificaciones comprueban, entre otros puntos:
 
 ### Referencias externas
 
-- Pi: https://pi.dev/docs/latest
-- pi-subagents: https://pi.dev/packages/pi-subagents
-- pi-mcp-adapter: https://pi.dev/packages/pi-mcp-adapter
-- pi-code-intelligence: https://pi.dev/packages/@catdaemon/pi-code-intelligence
+- [Pi](https://pi.dev/docs/latest)
+- [subagentes](https://pi.dev/packages/pi-subagents)
+- [adaptador MCP](https://pi.dev/packages/pi-mcp-adapter)
+- [code intelligence](https://pi.dev/packages/@catdaemon/pi-code-intelligence)
 
 ---
 
@@ -551,7 +548,7 @@ Las verificaciones comprueban, entre otros puntos:
 
 - Los instaladores usan `npm install -g --ignore-scripts` para reducir la superficie de ejecución innecesaria.
 - La configuración EURECAT añade reglas operativas al agente, incluyendo comunicación en castellano y restricciones de escritura fuera del directorio activo sin permiso explícito.
-- `@catdaemon/pi-code-intelligence` se usa para descubrimiento estructural, impacto, review y learnings por repositorio.
+- `code intelligence` se usa para descubrimiento estructural, impacto, review y learnings por repositorio.
 - `context-mode` sigue siendo la vía recomendada para logs grandes, outputs pesados y procesamiento de contexto extenso.
 - La extensión `ai-router` no sustituye a las tools nativas: ayuda a decidir **qué mirar primero** y **con qué herramienta conviene empezar**.
 

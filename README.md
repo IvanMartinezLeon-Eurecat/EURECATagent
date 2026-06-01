@@ -6,7 +6,7 @@ Su función principal es dejar preparado un agente de desarrollo con una configu
 
 - descubrimiento estructural con **Code Intelligence**
 - gestión de contexto pesado con **context-mode**
-- automatización y delegación con **pi-subagents**
+- automatización y delegación con **subagentes**
 - extensibilidad mediante **extensions**, **skills** y **themes** propios
 
 > Este repo no contiene una aplicación de negocio. Contiene la base para instalar y operar EURECATagent.
@@ -57,10 +57,10 @@ Los scripts de instalación dejan preparado lo siguiente:
 ### Binario base
 - `@earendil-works/pi-coding-agent`
 
-### Paquetes incluidos
-- `pi-subagents`
-- `pi-mcp-adapter`
-- `@catdaemon/pi-code-intelligence`
+### Capacidades incluidas
+- delegación y coordinación entre agentes
+- adaptador MCP
+- code intelligence
 
 ### Configuración de agente
 Se copia `config/agent/*` a `~/.pi/agent`, incluyendo:
@@ -381,7 +381,7 @@ Aporta:
 - reglas de routing híbrido
 - protección frente a búsquedas amplias innecesarias
 
-### `@catdaemon/pi-code-intelligence`
+### `code intelligence`
 Añade capacidades indexadas por repositorio para:
 - búsqueda semántica
 - análisis de impacto
@@ -398,7 +398,7 @@ Casos típicos:
 - indexar documentación o resultados intermedios
 - consultar memoria contextual almacenada
 
-### `pi-subagents`
+### `subagentes`
 Permite delegar o paralelizar trabajo con subagentes.
 
 Útil para:
@@ -464,7 +464,7 @@ Además de los scripts `verify.*`, el stack recomienda estas comprobaciones:
 
 Qué valida cada una:
 
-- `/router-status`: confirma si el routing híbrido detecta correctamente `code-intelligence`, `pi-subagents` y `context-mode`
+- `/router-status`: confirma si el routing híbrido detecta correctamente `code-intelligence`, `subagentes` y `context-mode`
 - `/code-intelligence-doctor`: verifica la disponibilidad de Code Intelligence
 - `/enable-code-intelligence`: activa indexación local para el repo actual
 - `/mcp`: comprueba accesibilidad de MCPs y tools externas
